@@ -1,0 +1,33 @@
+# dvbloop - A DVB Loopback Device
+# Copyright (C) 2006 Christian Praehauser
+#-----------------------------------------
+# File: Kbuild
+# Desc: Makefile for the Linux kernel build system
+# Date: October 2006
+# Author: Christian Praehauser <cpreahaus@cosy.sbg.ac.at>
+#
+# This file is released under the GPLv2.
+#
+
+obj-m += dvbloop.o
+dvbloop-objs := dvblo.o dvblo_adap.o dvblo_adap_fe.o dvblo_char.o dvblo_util.o
+
+KDIR=/lib/modules/$(shell uname -r)/build
+PWD=`pwd`
+
+EXTRA_CFLAGS = \
+	-Idrivers/media/dvb
+
+default: build
+
+build:
+	make -C $(KDIR) M=$(PWD) modules
+
+install: build
+	make -C $(KDIR) M=$(PWD) modules_install
+
+help:
+	make -C $(KDIR) M=$(PWD) help
+
+clean:
+	make -C $(KDIR) M=$(PWD) clean

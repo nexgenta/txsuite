@@ -1,0 +1,33 @@
+dvbloop - A virtual DVB Adapter - TODOs 
+
+* register under class "misc"
+
+* Make the first char device the "control device"
+
+* Support setting the PID that is used via ioctl() 
+
+* Maybe support writev, the vector version of write.
+
+* Use print_dev_t() and/or format_dev_t() for outputing device numbers.
+
+* Verify that inputs are conformant TS streams (yes, do TS sync)
+Also check PIDs and avoid that the same PID is used by more than one input stream. This could be done by internally remapping PIDs (however, this not the way to go, since it is too complex and too automatic) or by simply returning errors.
+
+* Maybe respect O_NONBLOCK in filp->flags
+This would essentially mean that we do mutex locking with down_trylock() and return immediately with -EAGAIN if the mutex is held by another process.
+See LDD chapter 6
+
+* Maybe support poll()
+See LDD chapter 6
+
+* Support for specifying (max) output bit-rates?
+If this should be implemented seriously:
+ (1) Each open file handle is assigned an input buffer
+ (2) Then, if somebody invokes char_op_write(), we really act as a multiplexer and select the input queue (the buffer assoc. with every file handle) from which we want to transfer next, respecting rate limitations. Funny huh?
+This would also make another feature possible: input stream priorization :-)
+Of course, with this design we could also specify max input bit-rates (per input stream/open file handle)
+At this point, we need sophisticated support for non-blocking operation, too!
+
+All things considered, this would require much work, and is probably a candidate for a "version 2.0".
+
+* Create own MUX thread using kernel_thread()
