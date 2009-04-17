@@ -14,4 +14,8 @@ The suite aims to cover, primarily:
 Most (if not all) of the tools are licensed under the GNU General
 Public License, version 2.
 
+Sources are taken from:
 
+* [dvbloop](http://cpn.dyndns.org/projects/dvbloop.shtml)
+* [mhegenc](http://www.spongelava.com/mhegenc.html)
+* [RedButton](http://redbutton.sourceforge.net)
