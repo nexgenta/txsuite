@@ -1,0 +1,70 @@
+/*
+ * Copyright (C) 2007, Simon Kilvington
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+ */
+
+#ifndef __PARSER_H__
+#define __PARSER_H__
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdint.h>
+
+#include "asn1tag.h"
+
+/* the parser builds a tree of ASN1 types */
+struct node
+{
+	/* DER type */
+	unsigned int asn1tag;	/* ASN1 tag number */
+	unsigned int asn1class;	/* only UNIVERSAL or CONTEXT */
+	/* DER tag/length header */
+	unsigned int hdr_length;
+	unsigned char *hdr_value;
+	/* DER value */
+	unsigned int length;	/* length of the value data */
+	unsigned char *value;	/* DER encoded value */
+	/* a tree of nodes */
+	struct node *parent;	/* NULL if we are the top */
+	struct node *children;	/* NULL if not a constructed type */
+	struct node *siblings;	/* linked list of children */
+};
+
+/* add a child to a node */
+struct node *add_child(struct node *, uint32_t);
+
+/* add a Null ASN1 object child to a node */
+void add_null_child(struct node *, uint32_t);
+
+/* return true if any of the node's descendants are not synthetic */
+bool has_real_children(struct node *);
+
+/* lexer token type */
+typedef int token_t;
+
+/* lexer functions */
+void set_input_file(char *);
+
+token_t peek_token(void);
+void expect_token(token_t, char *);
+token_t next_token(void);
+char *token_text(void);
+
+void parse_error(const char *, ...);
+unsigned int nparse_errors(void);
+
+void verbose(const char *, ...);
+void vverbose(const char *, ...);

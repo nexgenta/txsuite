@@ -1,0 +1,9 @@
+#define is_INVALID(TOK)	(TOK == INVALID)
+#define is_INTEGER(TOK)	(TOK == INTEGER)
+#define is_BOOLEAN(TOK)	(TOK == BOOLEAN)
+#define is_STRING(TOK)	(TOK == STRING)
+#define is_QPRINTABLE(TOK)	(TOK == QPRINTABLE)
+#define is_BASE64(TOK)	(TOK == BASE64)
+#define is_Null(TOK)	(TOK == Null)
+
+#endif	/* __PARSER_H__ */

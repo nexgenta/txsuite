@@ -1,0 +1,115 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#include "asn1decode.h"
+#include "der_decode.h"
+#include "asn1tag.h"
+#include "output.h"
+
+void verbose(char *, ...);
+
+int asn1decode_BOOLEAN(FILE *der, FILE *out, int length)
+{
+	int left = length;
+	int sublen;
+	struct der_tag tag;
+
+	verbose("<BOOLEAN>\n");
+
+	if((sublen = der_decode_Tag(der, &tag)) < 0)
+		return der_error("BOOLEAN");
+	left -= sublen;
+
+	if(is_BOOLEAN(tag.class, tag.number))
+	{
+		der_decode_BOOLEAN(der, out, tag.length);
+		left -= tag.length;
+	}
+	else
+	{
+		return der_error("BOOLEAN");
+	}
+
+	if(left != 0)
+		return der_error("BOOLEAN: %d bytes left", left);
+
+	verbose("</BOOLEAN>\n");
+
+	return length;
+}
+
+bool is_BOOLEAN(unsigned char class, unsigned int number)
+{
+	return MATCH_TAGCLASS(class, number, ASN1TAGCLASS_BOOLEAN);
+}
+
+int asn1decode_INTEGER(FILE *der, FILE *out, int length)
+{
+	int left = length;
+	int sublen;
+	struct der_tag tag;
+
+	verbose("<INTEGER>\n");
+
+	if((sublen = der_decode_Tag(der, &tag)) < 0)
+		return der_error("INTEGER");
+	left -= sublen;
+
+	if(is_INTEGER(tag.class, tag.number))
+	{
+		der_decode_INTEGER(der, out, tag.length);
+		left -= tag.length;
+	}
+	else
+	{
+		return der_error("INTEGER");
+	}
+
+	if(left != 0)
+		return der_error("INTEGER: %d bytes left", left);
+
+	verbose("</INTEGER>\n");
+
+	return length;
+}
+
+bool is_INTEGER(unsigned char class, unsigned int number)
+{
+	return MATCH_TAGCLASS(class, number, ASN1TAGCLASS_INTEGER);
+}
+
+int asn1decode_Null(FILE *der, FILE *out, int length)
+{
+	int left = length;
+	int sublen;
+	struct der_tag tag;
+
+	verbose("<Null>\n");
+
+	if((sublen = der_decode_Tag(der, &tag)) < 0)
+		return der_error("Null");
+	left -= sublen;
+
+	if(is_Null(tag.class, tag.number))
+	{
+		der_decode_Null(der, out, tag.length);
+		left -= tag.length;
+	}
+	else
+	{
+		return der_error("Null");
+	}
+
+	if(left != 0)
+		return der_error("Null: %d bytes left", left);
+
+	verbose("</Null>\n");
+
+	return length;
+}
+
+bool is_Null(unsigned char class, unsigned int number)
+{
+	return MATCH_TAGCLASS(class, number, ASN1TAGCLASS_NULL);
+}
+

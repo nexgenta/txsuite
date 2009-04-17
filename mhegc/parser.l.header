@@ -1,0 +1,20 @@
+%{
+#include <stdio.h>
+#include <stdarg.h>
+#include <string.h>
+#include <errno.h>
+#include "parser.h"
+#include "tokens.h"
+extern unsigned int lineno;
+extern unsigned int nerrs;
+%}
+%%
+\/\/[^\n\r\f]*			return COMMENT;
+([-0-9][0-9]*)|(0x[0-9a-f]+)	return INTEGER;
+true|false			return BOOLEAN;
+\"((\\\")|[^"])*\"		return STRING;
+'[^']*'				return QPRINTABLE;
+`[^`]*`				return BASE64;
+null				return Null;
+[\n\r\f]			lineno ++;
+[ \t]+				/* ignore whitespace */

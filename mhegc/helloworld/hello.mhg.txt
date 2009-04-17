@@ -1,0 +1,44 @@
+// MHEG5 Hello World scene
+//
+// http://www.digvid.info/mheg5/hello_world.php
+//
+
+{:Scene
+    ( "~/hello.mhg" 0 )
+    :Items
+    (
+        // Declare a background Rectangle that covers the screen.
+        {:Rectangle
+            1
+            :OrigBoxSize 720 576                // Size of rectangle
+            :OrigPosition 0 0                   // Position at top left
+            :OrigRefLineColour '=ff=ff=ff=00'   // White
+            :OrigRefFillColour '=ff=ff=ff=00'   // White
+        }
+
+        // Place a Text box on the screen
+        {:Text
+            2
+            :OrigContent "Hello World!"         // Text to display
+            :OrigBoxSize 300 50                 // Size of text box
+            :OrigPosition 200 100               // X,Y position
+            :FontAttributes "plain.36.42.0"     // Use large characters
+            :TextColour '=ff=00=00=00'          // Red
+        }
+
+        // Define a Link that triggers when the user presses the Blue key to
+        // Quit the application.
+        {:Link
+            3
+            :EventSource 0          // Source is this scene
+            :EventType UserInput    // Event type that we are looking for
+            :EventData 103          // 103 for the blue key
+            :LinkEffect (
+                :Quit ( ( '~/startup' 0 ) )
+            )
+        }
+    )
+
+    :InputEventReg 3
+    :SceneCS 720 576
+}

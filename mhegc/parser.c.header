@@ -1,0 +1,238 @@
+/*
+ * Copyright (C) 2007, Simon Kilvington
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+ */
+
+#include <stdio.h>
+#include <string.h>
+
+#include "parser.h"
+#include "tokens.h"
+#include "der_encode.h"
+#include "utils.h"
+
+/*
+ * lexer functions we need to provide
+ */
+
+unsigned int lineno = 1;
+unsigned int nerrs = 0;
+
+void
+yyerror(const char *str)
+{
+	fprintf(stderr, "Error: %s at line %u\n", str, lineno);
+
+	nerrs ++;
+
+	return;
+}
+
+int
+yywrap(void)
+{
+	return 1;
+}
+
+/*
+ * parser helper functions
+ */
+
+struct node *
+add_child(struct node *parent, uint32_t asn1tagclass)
+{
+	struct node *child;
+
+	if(asn1tagclass == ASN1TAG_SYNTHETIC)
+		return parent;
+
+	child = safe_malloc(sizeof(struct node));
+
+	/* class is in the top 8 bits, tag is the bottom 24 bits */
+	child->asn1tag = asn1tagclass & 0xffffff;
+	child->asn1class = (asn1tagclass >> 24) & 0xff;
+	/* DER tag/length header */
+	child->hdr_length = 0;
+	child->hdr_value = NULL;
+	/* DER value */
+	child->length = 0;
+	child->value = NULL;
+	/* the tree of nodes */
+	child->parent = parent;
+	child->children = NULL;
+	child->siblings = NULL;
+
+	/* is it the first */
+	if(parent->children == NULL)
+	{
+		parent->children = child;
+	}
+	else
+	{
+		/* add it to the end of the siblings list */
+		struct node *sib = parent->children;
+		while(sib->siblings != NULL)
+			sib = sib->siblings;
+		sib->siblings = child;
+	}
+
+	return child;
+}
+
+/*
+ * add this child and add a Null below it
+ */
+
+void
+add_null_child(struct node *parent, uint32_t asn1tagclass)
+{
+	parent = add_child(parent, asn1tagclass);
+
+	(void) add_child(parent, ASN1TAGCLASS_NULL);
+
+	return;
+}
+
+/*
+ * return true if any of the node's descendants are not synthetic
+ */
+
+bool
+has_real_children(struct node *n)
+{
+	struct node *kid;
+
+	for(kid=n->children; kid; kid=kid->siblings)
+	{
+		if(has_real_children(kid) || !is_synthetic(kid->asn1tag))
+			return true;
+	}
+
+	return false;
+}
+
+/*
+ * parser functions for the predefined types
+ */
+
+void parse_BOOLEAN(struct node *parent)
+{
+	if(next_token() != BOOLEAN)
+		parse_error("Unexpected token '%s'; expecting 'true' or 'false'", token_text());
+
+	verbose("<BOOLEAN value=%s/>\n", token_text());
+
+	/* create an explicit UNIVERSAL type if necessary */
+	if(needs_tagging(parent->asn1tag, parent->asn1class))
+		parent = add_child(parent, ASN1TAGCLASS_BOOLEAN);
+
+	der_encode_BOOLEAN(&parent->value, &parent->length, strcmp(token_text(), "false"));
+
+	return;
+}
+
+
+void parse_INTEGER(struct node *parent)
+{
+	if(next_token() != INTEGER)
+		parse_error("Unexpected token '%s'; expecting an integer", token_text());
+
+	verbose("<INTEGER value=%s/>\n", token_text());
+
+	/* create an explicit UNIVERSAL type if necessary */
+	if(needs_tagging(parent->asn1tag, parent->asn1class))
+		parent = add_child(parent, ASN1TAGCLASS_INTEGER);
+
+	der_encode_INTEGER(&parent->value, &parent->length, strtol(token_text(), NULL, 0));
+
+	return;
+}
+
+void parse_OCTETSTRING(struct node *parent)
+{
+	/*
+	 * create an explicit UNIVERSAL type if necessary
+	 * need to look at our parent's parent because an OctetString in the grammar
+	 * is a choice between a STRING, a QPRINTABLE or a BASE64
+	 * so our parent will always be a choice node
+	 * the OCTET STRING ASN1 type does not have this extra choice parent node
+	 */
+	if(needs_tagging(parent->parent->asn1tag, parent->parent->asn1class))
+		parent = add_child(parent, ASN1TAGCLASS_OCTETSTRING);
+
+	der_encode_OctetString(&parent->value, &parent->length, token_text());
+
+	return;
+}
+
+void parse_STRING(struct node *parent)
+{
+	if(next_token() != STRING)
+		parse_error("Unexpected token '%s'; expecting \"STRING\"", token_text());
+
+	verbose("<STRING value=%s/>\n", token_text());
+
+	parse_OCTETSTRING(parent);
+
+	return;
+}
+
+void parse_QPRINTABLE(struct node *parent)
+{
+	if(next_token() != QPRINTABLE)
+		parse_error("Unexpected token '%s'; expecting 'QPRINTABLE'", token_text());
+
+	verbose("<QPRINTABLE value=%s/>\n", token_text());
+
+	parse_OCTETSTRING(parent);
+
+	return;
+}
+
+void parse_BASE64(struct node *parent)
+{
+	if(next_token() != BASE64)
+		parse_error("Unexpected token '%s'; expecting `BASE64`", token_text());
+
+	verbose("<BASE64 value=%s/>\n", token_text());
+
+	parse_OCTETSTRING(parent);
+
+	return;
+}
+
+void parse_Null(struct node *parent)
+{
+	if(next_token() != Null)
+		parse_error("Unexpected token '%s'; expecting 'Null'", token_text());
+
+	verbose("<Null/>\n");
+
+	/* assert */
+	if(parent->length != 0)
+		fatal("Null: length=%u", parent->length);
+
+	/* create an explicit UNIVERSAL type if necessary */
+	if(needs_tagging(parent->asn1tag, parent->asn1class))
+		parent = add_child(parent, ASN1TAGCLASS_NULL);
+
+	return;
+}
+
+/*
+ * auto-generated parser functions follow
+ */
+

@@ -1,0 +1,62 @@
+mhegc
+output filename should default to App/Scene GroupIdentifier rather than "a"
+(but warn if file exists - stops accidental overwrite of source!)
+
+---
+
+mhegc
+check MovementTable/Movement/TargetElement are encoded correctly
+
+---
+
+mhegc
+be able to choose what value is used for 'true' BOOLEANs (1-255)
+curently we always use 1
+BBC use 0xff
+
+---
+
+mhegd
+check NoTokenActionSlots (empty and not empty)
+check ActionSlots empty (ie Null) works
+check MovementTable (empty and not empty)
+
+---
+
+clean up ccc.y
+
+---
+
+ideas from mhegenc (http://www.spongelava.com/mhegenc.html):
+allow INTEGERs to be arthimetic expressions
+#include "uk.inc"
+
+---
+
+mhegd
+make this look nicer (4165/a)...
+{:TokenGroup 1000
+	:Shared true
+	:TokenGroupItems (
+		( 102
+		:ActionSlots (
+			(
+			:Call ( ... )
+			:Activate ( 1001 )
+		) )
+	)
+}
+
+this is even worse (4165/enh_gateway.mhg)...
+                {:TokenGroup 82
+                        :TokenGroupItems (
+                                ( ( '/a' 1 )
+                                :ActionSlots (
+                                        (
+                                        :Run ( ( '/a' 119 ) ) ) (
+                                        :Run ( ( '/a' 119 ) ) ) (
+                                        :Run ( ( '/a' 122 ) )
+                                        :Run ( ( '/a' 120 ) ) )
+                                ) )
+                        )
+

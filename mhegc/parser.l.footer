@@ -1,0 +1,96 @@
+[{:a-z0-9]+			return UNKNOWN_WORD;
+.				return INVALID_CHAR;
+%%
+
+void
+set_input_file(char *src_name)
+{
+	if((yyin = fopen(src_name, "r")) == NULL)
+	{
+		fprintf(stderr, "Unable to read %s: %s\n", src_name, strerror(errno));
+		exit(EXIT_FAILURE);
+	}
+
+	return;
+}
+
+/* don't use #define in case they are macros too */
+token_t
+peek_token(void)
+{
+	token_t tok = yylex();
+
+	while(tok == COMMENT)
+	{
+		vverbose("peek: skip comment '%s'\n", yytext);
+		tok = yylex();
+	}
+
+	vverbose("peek: '%s'\n", yytext);
+
+	/* return it to the input stream */
+	yyless(0);
+
+	return tok;
+}
+
+void
+expect_token(token_t tok, char *name)
+{
+	if(next_token() != tok)
+		parse_error("Unexpected token '%s'; expecting '%s'", token_text(), name);
+
+	return;
+}
+
+token_t
+next_token(void)
+{
+	token_t tok = yylex();
+
+	while(tok == COMMENT)
+	{
+		vverbose("next: skip comment '%s'\n", yytext);
+		tok = yylex();
+	}
+
+	vverbose("next: '%s'\n", yytext);
+
+	return tok;
+}
+
+char *
+token_text(void)
+{
+	return yytext;
+}
+
+void yyerror(const char *);
+
+void
+parse_error(const char *fmt, ...)
+{
+	va_list ap;
+	char *err;
+
+	va_start(ap, fmt);
+	if(vasprintf(&err, fmt, ap) < 0)
+	{
+		fprintf(stderr, "Out of memory or illegal format string '%s'", fmt);
+		exit(EXIT_FAILURE);
+	}
+	va_end(ap);
+
+	yyerror(err);
+
+	free(err);
+
+	return;
+}
+
+unsigned int
+nparse_errors(void)
+{
+	return nerrs;
+}
+

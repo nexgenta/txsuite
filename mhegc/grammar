@@ -1,0 +1,931 @@
+// MHEG5 Textual Format
+// includes UK MHEG Profile additions
+
+InterchangedObject	::= ApplicationClass | SceneClass .
+
+// B.4.1 Root Class
+
+Root			::= ObjectIdentifier .
+ObjectIdentifier	::= ObjectReference .
+
+
+// B.4.2 Group Class
+
+Group				::= Root [StandardIdentifier]
+					[StandardVersion] [ObjectInformation]
+					[OnStartUp] [OnCloseDown]
+					[OriginalGroupCachePriority] [Items] .
+StandardIdentifier		::= ":StdID" JointIsoItuIdentifier
+					MHEGStandardIdentifier .
+JointIsoItuIdentifier		::= INTEGER .
+MHEGStandardIdentifier		::= INTEGER .
+StandardVersion			::= ":StdVersion" INTEGER .
+ObjectInformation		::= ":ObjectInfo" OctetString .
+OnStartUp			::= ":OnStartUp" ActionClass .
+OnCloseDown			::= ":OnCloseDown" ActionClass .
+OriginalGroupCachePriority	::= ":OrigGCPriority" INTEGER .
+Items				::= ":Items" "(" GroupItem+ ")" .
+GroupItem			::= ResidentProgramClass |
+					RemoteProgramClass |
+					InterchangedProgramClass |
+					PaletteClass |
+					FontClass |
+					CursorShapeClass |
+					BooleanVariableClass |
+					IntegerVariableClass |
+					OctetStringVariableClass |
+					ObjectRefVariableClass |
+					ContentRefVariableClass |
+					LinkClass |
+					StreamClass |
+					BitmapClass |
+					LineArtClass |
+					DynamicLineArtClass |
+					RectangleClass |
+					HotspotClass |
+					SwitchButtonClass |
+					PushButtonClass |
+					TextClass |
+					EntryFieldClass |
+					HyperTextClass |
+					SliderClass |
+					TokenGroupClass |
+					ListGroupClass .
+
+
+// B.4.3 Application Class
+
+ApplicationClass		::= "{:Application" Group
+					[OnSpawnCloseDown] [OnRestart]
+					[DefaultAttributes] "}" .
+OnSpawnCloseDown		::= ":OnSpawnCloseDown" ActionClass .
+OnRestart			::= ":OnRestart" ActionClass .
+DefaultAttributes		::= DefaultAttribute+       .
+DefaultAttribute		::= CharacterSet | BackgroundColour
+					| TextContentHook
+					| TextColour | Font
+					| FontAttributes
+					| InterchangedProgramContentHook
+					| StreamContentHook
+					| BitmapContentHook
+					| LineArtContentHook | ButtonRefColour
+					| HighlightRefColour | SliderRefColour .
+CharacterSet			::= ":CharacterSet" INTEGER .
+BackgroundColour		::= ":BackgroundColour" Colour .
+TextContentHook			::= ":TextCHook" INTEGER .
+TextColour			::= ":TextColour" Colour .
+Font				::= ":Font" FontBody .
+FontBody			::= DirectFont | IndirectFont .
+DirectFont			::= OctetString .
+IndirectFont			::= ObjectReference .
+FontAttributes			::= ":FontAttributes" OctetString .
+InterchangedProgramContentHook	::= ":InterchgPrgCHook" INTEGER .
+StreamContentHook		::= ":StreamCHook" INTEGER .
+BitmapContentHook		::= ":BitmapCHook" INTEGER .
+LineArtContentHook		::= ":LineArtCHook" INTEGER .
+ButtonRefColour			::= ":ButtonRefColour" Colour .
+HighlightRefColour		::= ":HighlightRefColour" Colour .
+SliderRefColour			::= ":SliderRefColour" Colour .
+
+
+// B.4.4 Scene Class
+
+SceneClass		::= "{:Scene" Group InputEventRegister
+				SceneCoordinateSystem [AspectRatio]
+				[MovingCursor] [NextScenes] "}" .
+InputEventRegister	::= ":InputEventReg" INTEGER .
+SceneCoordinateSystem	::= ":SceneCS" XScene YScene .
+XScene			::= INTEGER .
+YScene			::= INTEGER .
+AspectRatio		::= ":AspectRatio" Width Height .
+Width			::= INTEGER .
+Height			::= INTEGER .
+MovingCursor		::= ":MovingCursor" BOOLEAN .
+NextScenes		::= ":NextScenes" "(" NextScene+ ")" .
+NextScene		::= "(" SceneRef SceneWeight ")" .
+SceneRef		::= OctetString .
+SceneWeight		::= INTEGER .
+
+
+// B.4.5 Ingredient Class
+
+Ingredient		::= Root [InitiallyActive] [ContentHook]
+				[OriginalContent] [Shared] .
+InitiallyActive		::= ":InitiallyActive" BOOLEAN .
+ContentHook		::= ":CHook" INTEGER .
+OriginalContent		::= ":OrigContent" ContentBody .
+ContentBody		::= IncludedContent | ReferencedContent .
+IncludedContent		::= OctetString .
+ReferencedContent	::= ":ContentRef" "(" ContentReference
+				[ContentSize] [ContentCachePriority]
+				")" .
+ContentSize		::= ":ContentSize" INTEGER .
+ContentCachePriority	::= ":CCPriority" INTEGER .
+Shared			::= ":Shared" BOOLEAN .
+
+
+// B.4.6 Link Class
+
+LinkClass	::= "{:Link" Ingredient LinkCondition
+			LinkEffect "}" .
+LinkCondition	::= EventSource EventType [EventData] .
+EventSource	::= ":EventSource" ObjectReference .
+EventType	::= ":EventType" EventTypeEnum .
+EventTypeEnum	::= "IsAvailable" | "ContentAvailable"
+			| "IsDeleted" | "IsRunning"
+			| "IsStopped" | "UserInput"
+			| "AnchorFired" | "TimerFired"
+			| "AsynchStopped" | "InteractionCompleted"
+			| "TokenMovedFrom" | "TokenMovedTo"
+			| "StreamEvent" | "StreamPlaying"
+			| "StreamStopped" | "CounterTrigger"
+			| "HighlightOn" | "HighlightOff"
+			| "CursorEnter" | "CursorLeave"
+			| "IsSelected" | "IsDeselected"
+			| "TestEvent" | "FirstItemPresented"
+			| "LastItemPresented" | "HeadItems"
+			| "TailItems" | "ItemSelected"
+			| "ItemDeselected" | "EntryFieldFull"
+			| "EngineEvent" | "FocusMoved" | "SliderValueChanged" .
+EventData	::= ":EventData" EventDataBody .
+EventDataBody	::= OctetString | BOOLEAN | INTEGER .
+LinkEffect	::= ":LinkEffect" ActionClass .
+
+
+// B.4.7 Program Class
+
+Program			::= Ingredient Name [InitiallyAvailable] .
+Name			::= ":Name" OctetString .
+InitiallyAvailable	::= ":InitiallyAvailable" BOOLEAN .
+
+
+// B.4.8 ResidentProgram Class
+
+ResidentProgramClass	::= "{:ResidentPrg" Program "}" .
+
+
+// B.4.9 RemoteProgram Class
+
+RemoteProgramClass	::= "{:RemotePrg" Program
+				[ProgramConnectionTag] "}" .
+ProgramConnectionTag	::= ":ConnectionTag" INTEGER .
+
+
+// B.4.10 InterchangedProgram Class
+
+InterchangedProgramClass	::= "{:InterchgPrg" Program "}" .
+
+
+// B.4.11 Palette Class
+
+PaletteClass	::= "{:Palette" Ingredient "}" .
+
+
+// B.4.12 Font Class
+
+FontClass	::= "{:Font" Ingredient "}" .
+
+
+// B.4.13 CursorShape Class
+
+CursorShapeClass	::= "{:CursorShape" Ingredient "}" .
+
+
+// B.4.14 Variable Class
+
+Variable		::= Ingredient OriginalValue .
+OriginalValue		::= ":OrigValue" OriginalValueBody .
+OriginalValueBody	::= BOOLEAN | INTEGER | OctetString
+				| ObjectReferenceValue
+				| ContentReferenceValue .
+ObjectReferenceValue	::= ":ObjectRef" ObjectReference .
+ContentReferenceValue	::= ":ContentRef" ContentReference69 .
+
+
+// B.4.15 BooleanVariable Class
+
+BooleanVariableClass	::= "{:BooleanVar" Variable "}" .
+
+
+// B.4.16 IntegerVariable Class
+
+IntegerVariableClass	::= "{:IntegerVar" Variable "}" .
+
+
+// B.4.17 OctetStringVariable Class
+
+OctetStringVariableClass	::= "{:OStringVar" Variable "}" .
+
+
+// B.4.18 ObjectRefVariable Class
+
+ObjectRefVariableClass	::= "{:ObjectRefVar" Variable "}" .
+
+
+// B.4.19 ContentRefVariable Class
+
+ContentRefVariableClass	::= "{:ContentRefVar" Variable "}" .
+
+
+// B.4.20 Presentable Class
+
+Presentable	::= Ingredient .
+
+
+// B.4.21 TokenManager Class
+
+TokenManager	::= [MovementTable] .
+MovementTable	::= ":MovementTable" "(" Movement+ ")" .
+Movement	::= "(" TargetElement+ ")" .
+TargetElement	::= INTEGER .
+
+
+// B.4.22 TokenGroup Class
+
+TokenGroupClass		::= "{:TokenGroup" TokenGroupBody "}" .
+TokenGroupBody		::= Presentable TokenManager [TokenGroupItems]
+				[NoTokenActionSlots] .
+TokenGroupItems		::= ":TokenGroupItems" "(" TokenGroupItem+ ")" .
+TokenGroupItem		::= "(" AVisible [ActionSlots] ")" .
+AVisible		::= ObjectReference .
+ActionSlots		::= ":ActionSlots" "(" ActionSlot+ ")" .
+ActionSlot		::= ActionClassSeq | Null .
+NoTokenActionSlots	::= ":NoTokenActionSlots" "(" ActionSlotSeq+ ")" .
+// srk - to get an explicit SEQUENCE tag under NoTokenActionSlots
+ActionSlotSeq		::= ActionClassSeq | Null .
+ActionClassSeq		::= ActionClass .
+
+// B.4.23 ListGroup Class
+
+ListGroupClass		::= "{:ListGroup" TokenGroupBody
+				Positions [WrapAround]
+				[MultipleSelection] "}" .
+Positions		::= ":Positions" "(" Position+ ")" .
+Position		::= "(" XYPosition ")" .
+WrapAround		::= ":WrapAround" BOOLEAN .
+MultipleSelection	::= ":MultipleSelection" BOOLEAN .
+
+
+// B.4.24 Visible Class
+
+Visible			::= Presentable OriginalBoxSize
+				[OriginalPosition] [OriginalPaletteRef] .
+OriginalBoxSize		::= ":OrigBoxSize" BoxSize .
+BoxSize			::= XLength YLength .
+XLength			::= INTEGER .
+YLength			::= INTEGER .
+OriginalPosition	::= ":OrigPosition" XYPosition .
+OriginalPaletteRef	::= ":OrigPaletteRef" ObjectReference   .
+
+
+// B.4.25 Bitmap Class
+
+BitmapClass		::= "{:Bitmap" Visible [Tiling]
+				[OriginalTransparency] "}" .
+Tiling			::= ":Tiling" BOOLEAN .
+OriginalTransparency	::= ":OrigTransparency" INTEGER .
+
+
+// B.4.26 LineArt Class
+
+LineArtClass		::= "{:LineArt" LineArtBody "}" .
+LineArtBody		::= Visible [BorderedBoundingBox]
+				[OriginalLineWidth]
+				[OriginalLineStyle]
+				[OriginalRefLineColour]
+				[OriginalRefFillColour] .
+BorderedBoundingBox	::= ":BBBox" BOOLEAN .
+OriginalLineWidth	::= ":OrigLineWidth" INTEGER .
+OriginalLineStyle	::= ":OrigLineStyle" INTEGER .
+OriginalRefLineColour	::= ":OrigRefLineColour" Colour .
+OriginalRefFillColour	::= ":OrigRefFillColour"  Colour .
+
+
+// B.4.27 Rectangle Class
+
+RectangleClass	::= "{:Rectangle" LineArtBody "}" .
+
+
+// B.4.28 DynamicLineArt Class
+
+DynamicLineArtClass	::= "{:DynamicLineArt" LineArtBody "}" .
+
+
+// B.4.29 Text Class
+
+TextClass		::= "{:Text" TextBody "}" .
+TextBody		::= Visible [OriginalFont] [FontAttributes]
+				[TextColour] [BackgroundColour]
+				[CharacterSet]
+				[HorizontalJustification]
+				[VerticalJustification]
+				[LineOrientation] [StartCorner]
+				[TextWrapping] .
+OriginalFont		::= ":OrigFont" FontBody .
+HorizontalJustification	::= ":HJustification" JustificationEnum .
+JustificationEnum	::= "start" | "end" | "centre" | "justified" .
+VerticalJustification	::= ":VJustification" JustificationEnum .
+LineOrientation		::= ":LineOrientation" LineOrientationEnum .
+LineOrientationEnum	::= "vertical" | "horizontal" .
+StartCorner		::= ":StartCorner" StartCornerEnum .
+StartCornerEnum		::= "upper-left" | "upper-right"
+				| "lower-left" | "lower-right" .
+TextWrapping		::= ":TextWrapping" BOOLEAN .
+
+
+// B.4.30 Stream Class
+
+StreamClass	::= "{:Stream" Presentable [Multiplex]
+			[Storage] [Looping] "}" .
+Multiplex	::= ":Multiplex" "(" StreamComponent+ ")" .
+StreamComponent	::= AudioClass | VideoClass | RTGraphicsClass  .
+Storage		::= ":Storage" StorageEnum .
+StorageEnum	::= "memory" | "stream" .
+Looping		::= ":Looping" INTEGER .
+
+
+// B.4.31 Audio Class
+
+AudioClass	::= "{:Audio" Presentable ComponentTag
+			[OriginalVolume] "}" .
+ComponentTag	::= ":ComponentTag" INTEGER .
+OriginalVolume	::= ":OrigVolume" INTEGER .
+
+
+// B.4.32 Video Class
+
+VideoClass	::= "{:Video" Visible ComponentTag
+			[Termination] "}" .
+Termination	::= ":Termination" TerminationEnum .
+TerminationEnum	::= "freeze" | "disappear" .
+
+
+// B.4.33 RTGraphics Class
+
+RTGraphicsClass	::= "{:RTGraphics" Visible ComponentTag
+			[Termination] "}" .
+
+
+// B.4.34 Interactible Class
+
+Interactible	::= [EngineResp] [HighlightRefColour] .
+EngineResp	::= ":EngineResp" BOOLEAN .
+
+
+// B.4.35 Slider Class
+
+SliderClass	::= "{:Slider" Visible Interactible
+			Orientation MaxValue [MinValue]
+			[InitialValue] [InitialPortion]
+			[StepSize] [SliderStyle]
+			[SliderRefColour] "}" .
+Orientation	::= ":Orientation" OrientationEnum .
+OrientationEnum	::= "left" | "right" | "up" | "down" .
+MaxValue	::= ":MaxValue" INTEGER .
+MinValue	::= ":MinValue" INTEGER .
+InitialValue	::= ":InitialValue" INTEGER .
+InitialPortion	::= ":InitialPortion" INTEGER .
+StepSize	::= ":StepSize" INTEGER .
+SliderStyle	::= ":SliderStyle" SliderStyleEnum .
+SliderStyleEnum	::= "normal" | "thermometer" | "proportional" .
+
+
+// B.4.36 EntryField Class
+
+EntryFieldClass	::= "{:EntryField" TextBody Interactible
+			[InputType] [CharList]
+			[ObscuredInput] [MaxLength] "}" .
+InputType	::= ":InputType" InputTypeEnum .
+InputTypeEnum	::= "alpha" | "numeric" | "any" | "listed" .
+CharList	::= ":CharList" OctetString .
+ObscuredInput	::= ":ObscuredInput" BOOLEAN .
+MaxLength	::= ":MaxLength" INTEGER .
+
+
+// B.4.37 HyperText Class
+
+HyperTextClass	::= "{:HyperText" TextBody Interactible
+			"}" .
+
+
+// B.4.38 Button Class
+
+Button	::= Visible Interactible [ButtonRefColour] .
+
+
+// B.4.39 Hotspot Class
+
+HotspotClass	::= "{:Hotspot" Button "}" .
+
+
+// B.4.40 PushButton Class
+
+PushButtonClass	::= "{:PushButton" PushButtonBody "}" .
+PushButtonBody	::= Button [OriginalLabel] [CharacterSet] .
+OriginalLabel	::= ":OrigLabel" OctetString .
+
+
+// B.4.41 SwitchButton Class
+
+SwitchButtonClass	::= "{:SwitchButton" PushButtonBody
+				ButtonStyle "}" .
+ButtonStyle		::= ":ButtonStyle" ButtonStyleEnum .
+ButtonStyleEnum		::= "pushbutton" | "radiobutton" | "checkbox" .
+
+
+// B.4.42 Action Class
+
+ActionClass		::= "(" ElementaryAction+ ")" .
+ElementaryAction	::= Activate
+				| Add
+				| AddItem
+				| Append
+				| BringToFront
+				| Call
+				| CallActionSlot
+				| Clear
+				| Clone
+				| CloseConnection
+				| Deactivate
+				| DelItem
+				| Deselect
+				| DeselectItem
+				| Divide
+				| DrawArc
+				| DrawLine
+				| DrawOval
+				| DrawPolygon
+				| DrawPolyline
+				| DrawRectangle
+				| DrawSector
+				| Fork
+				| GetAvailabilityStatus
+				| GetBoxSize
+				| GetCellItem
+				| GetCursorPosition
+				| GetEngineSupport
+				| GetEntryPoint
+				| GetFillColour
+				| GetFirstItem
+				| GetHighlightStatus
+				| GetInteractionStatus
+				| GetItemStatus
+				| GetLabel
+				| GetLastAnchorFired
+				| GetLineColour
+				| GetLineStyle
+				| GetLineWidth
+				| GetListItem
+				| GetListSize
+				| GetOverwriteMode
+				| GetPortion
+				| GetPosition
+				| GetRunningStatus
+				| GetSelectionStatus
+				| GetSliderValue
+				| GetTextContent
+				| GetTextData
+				| GetTokenPosition
+				| GetVolume
+				| Launch
+				| LockScreen
+				| Modulo
+				| Move
+				| MoveTo
+				| Multiply
+				| OpenConnection
+				| Preload
+				| PutBefore
+				| PutBehind
+				| Quit
+				| ReadPersistent
+				| Run
+				| ScaleBitmap
+				| ScaleVideo
+				| ScrollItems
+				| Select
+				| SelectItem
+				| SendEvent
+				| SendToBack
+				| SetBoxSize
+				| SetCachePriority
+				| SetCounterEndPosition
+				| SetCounterPosition
+				| SetCounterTrigger
+				| SetCursorPosition
+				| SetCursorShape
+				| SetData
+				| SetEntryPoint
+				| SetFillColour
+				| SetFirstItem
+				| SetFontRef
+				| SetHighlightStatus
+				| SetInteractionStatus
+				| SetLabel
+				| SetLineColour
+				| SetLineStyle
+				| SetLineWidth
+				| SetOverwriteMode
+				| SetPaletteRef
+				| SetPortion
+				| SetPosition
+				| SetSliderValue
+				| SetSpeed
+				| SetTimer
+				| SetTransparency
+				| SetVariable
+				| SetVolume
+				| Spawn
+				| Step
+				| Stop
+				| StorePersistent
+				| Subtract
+				| TestVariable
+				| Toggle
+				| ToggleItem
+				| TransitionTo
+				| Unload
+				| UnlockScreen
+				| SetBackgroundColour
+				| SetCellPosition
+				| SetInputReg
+				| SetTextColour
+				| SetFontAttributes
+				| SetVideoDecodeOffset
+				| GetVideoDecodeOffset
+				| GetFocusPosition
+				| SetFocusPosition
+				| SetBitmapDecodeOffset
+				| GetBitmapDecodeOffset
+				| SetSliderParameters .
+
+Activate	::= ":Activate" "(" Target ")" .
+Add	::= ":Add" "(" Target Value ")" .
+AddItem	::= ":AddItem" "(" Target ItemIndex
+		VisibleReference ")" .
+Append	::= ":Append" "(" Target AppendValue ")" .
+BringToFront	::= ":BringToFront" "(" Target ")" .
+Call	::= ":Call" "(" Target CallSucceeded
+		[Parameters] ")" .
+CallActionSlot	::= ":CallActionSlot" "(" Target Index ")" .
+Clear	::= ":Clear" "(" Target ")" .
+Clone	::= ":Clone" "(" Target CloneRefVar ")" .
+CloseConnection	::= ":CloseConnection" "(" Target
+			ConnectionTag ")" .
+Deactivate	::= ":Deactivate" "(" Target ")" .
+DelItem	::= ":DelItem" "(" Target VisibleReference
+			")" .
+Deselect	::= ":Deselect" "(" Target ")" .
+DeselectItem	::= ":DeselectItem" "(" Target ItemIndex ")" .
+Divide	::= ":Divide" "(" Target Value ")" .
+DrawArc	::= ":DrawArc" "(" Target X Y EllipseWidth
+			EllipseHeight StartAngle ArcAngle ")" .
+DrawLine	::= ":DrawLine" "(" Target X1 Y1 X2 Y2 ")" .
+DrawOval	::= ":DrawOval" "(" Target X Y EllipseWidth
+			EllipseHeight ")" .
+DrawPolygon	::= ":DrawPolygon" "(" Target PointList ")" .
+DrawPolyline	::= ":DrawPolyline" "(" Target PointList ")" .
+DrawRectangle	::= ":DrawRectangle" "(" Target X1 Y1 X2 Y2
+			")" .
+DrawSector	::= ":DrawSector" "(" Target X Y EllipseWidth
+			EllipseHeight StartAngle ArcAngle")" .
+Fork	::= ":Fork" "(" Target ForkSucceeded
+			[Parameters] ")" .
+GetAvailabilityStatus	::= ":GetAvailabilityStatus" "(" Target
+				AvailabilityStatusVar")" .
+GetBoxSize	::= ":GetBoxSize" "(" Target XBoxSizeVar
+			YBoxSizeVar")" .
+GetCellItem	::= ":GetCellItem" "(" Target CellIndex
+			ItemRefVar ")" .
+GetCursorPosition	::= ":GetCursorPosition" "(" Target XOut YOut
+				")" .
+GetEngineSupport	::= ":GetEngineSupport" "(" Target Feature
+				Answer ")" .
+GetEntryPoint	::= ":GetEntryPoint" "(" Target EntryPointVar
+			")" .
+GetFillColour	::= ":GetFillColour" "(" Target FillColourVar
+			")" .
+GetFirstItem	::= ":GetFirstItem" "(" Target FirstItemVar
+			")" .
+GetHighlightStatus	::= ":GetHighlightStatus" "(" Target
+				HighlightStatusVar ")" .
+GetInteractionStatus	::= ":GetInteractionStatus" "(" Target
+				InteractionStatusVar ")" .
+GetItemStatus	::= ":GetItemStatus" "(" Target
+			ItemIndex ItemStatusVar ")" .
+GetLabel	::= ":GetLabel" "(" Target LabelVar ")" .
+GetLastAnchorFired	::= ":GetLastAnchorFired" "(" Target
+				LastAnchorFiredVar ")" .
+GetLineColour	::= ":GetLineColour" "(" Target LineColourVar
+			")" .
+GetLineStyle	::= ":GetLineStyle" "(" Target LineStyleVar
+			")" .
+GetLineWidth	::= ":GetLineWidth" "(" Target LineWidthVar
+			")" .
+GetListItem	::= ":GetListItem" "(" Target ItemIndex
+			ItemRefVar ")" .
+GetListSize	::= ":GetListSize" "(" Target SizeVar ")" .
+GetOverwriteMode	::= ":GetOverwriteMode" "(" Target
+				OverwriteModeVar ")" .
+GetPortion	::= ":GetPortion" "(" Target PortionVar ")" .
+GetPosition	::= ":GetPosition" "(" Target XPositionVar
+			YPositionVar ")" .
+GetRunningStatus	::= ":GetRunningStatus" "(" Target
+				RunningStatusVar ")" .
+GetSelectionStatus	::= ":GetSelectionStatus" "(" Target
+				SelectionStatusVar ")" .
+GetSliderValue	::= ":GetSliderValue" "(" Target
+			SliderValueVar ")" .
+GetTextContent	::= ":GetTextContent" "(" Target
+			TextContentVar ")" .
+GetTextData	::= ":GetTextData" "(" Target TextDataVar ")" .
+GetTokenPosition	::= ":GetTokenPosition" "(" Target
+				TokenPositionVar ")" .
+GetVolume	::= ":GetVolume" "(" Target VolumeVar ")" .
+Launch	::= ":Launch" "(" Target ")" .
+LockScreen	::= ":LockScreen" "(" Target ")" .
+Modulo	::= ":Modulo" "(" Target Value ")" .
+Move	::= ":Move" "(" Target MovementIdentifier ")" .
+MoveTo	::= ":MoveTo" "(" Target Index ")" .
+Multiply	::= ":Multiply" "(" Target Value ")" .
+OpenConnection	::= ":OpenConnection" "(" Target OpenSucceeded
+			Protocol Address ConnectionTag ")" .
+Preload	::= ":Preload" "(" Target ")" .
+PutBefore	::= ":PutBefore" "(" Target ReferenceVisible
+			")" .
+PutBehind	::= ":PutBehind" "(" Target ReferenceVisible
+			")" .
+Quit	::= ":Quit" "(" Target ")" .
+ReadPersistent	::= ":ReadPersistent" "(" Target ReadSucceeded
+			OutVariables InFileName ")" .
+Run	::= ":Run" "(" Target ")" .
+ScaleBitmap	::= ":ScaleBitmap" "(" Target XScale YScale ")" .
+ScaleVideo	::= ":ScaleVideo" "(" Target XScale YScale ")" .
+ScrollItems	::= ":ScrollItems" "(" Target ItemsToScroll ")" .
+Select	::= ":Select" "(" Target ")" .
+SelectItem	::= ":SelectItem" "(" Target ItemIndex ")" .
+SendEvent	::= ":SendEvent" "(" Target EmulatedEventSource
+			EmulatedEventType [EmulatedEventData]
+			")" .
+SendToBack	::= ":SendToBack" "(" Target ")" .
+SetBoxSize	::= ":SetBoxSize" "(" Target XNewBoxSize
+			YNewBoxSize ")" .
+SetCachePriority	::= ":SetCachePriority" "(" Target
+				NewCachePriority ")" .
+SetCounterEndPosition	::= ":SetCounterEndPosition" "(" Target
+				NewCounterEndPosition ")" .
+SetCounterPosition	::= ":SetCounterPosition" "(" Target
+				NewCounterPosition ")" .
+SetCounterTrigger	::= ":SetCounterTrigger" "(" Target
+				TriggerIdentifier [NewCounterValue]
+				")" .
+SetCursorPosition	::= ":SetCursorPosition" "(" Target XCursor
+				YCursor ")" .
+SetCursorShape	::= ":SetCursorShape" "(" Target
+			[NewCursorShape] ")" .
+SetData	::= ":SetData" "(" Target NewContent ")" .
+SetEntryPoint	::= ":SetEntryPoint" "(" Target NewEntryPoint
+			")" .
+SetFillColour	::= ":SetFillColour" "(" Target [NewColour]
+			")" .
+SetFirstItem	::= ":SetFirstItem" "(" Target NewFirstItem
+			")" .
+SetFontRef	::= ":SetFontRef" "(" Target NewFont ")" .
+SetHighlightStatus	::= ":SetHighlightStatus" "(" Target
+				NewHighlightStatus ")" .
+SetInteractionStatus	::= ":SetInteractionStatus" "(" Target
+				NewInteractionStatus ")" .
+SetLabel	::= ":SetLabel" "(" Target NewLabel ")" .
+SetLineColour	::= ":SetLineColour" "(" Target NewColour ")" .
+SetLineStyle	::= ":SetLineStyle" "(" Target NewLineStyle
+			")" .
+SetLineWidth	::= ":SetLineWidth" "(" Target NewLineWidth
+			")" .
+SetOverwriteMode	::= ":SetOverwriteMode" "(" Target
+				NewOverwriteMode ")" .
+SetPaletteRef	::= ":SetPaletteRef" "(" Target NewPaletteRef
+			")" .
+SetPortion	::= ":SetPortion" "(" Target NewPortion ")" .
+SetPosition	::= ":SetPosition" "(" Target NewXPosition
+			NewYPosition ")" .
+SetSliderValue	::= ":SetSliderValue" "(" Target
+			NewSliderValue ")" .
+SetSpeed	::= ":SetSpeed" "(" Target NewSpeed ")" .
+SetTimer	::= ":SetTimer" "(" Target TimerID [NewTimer] ")" .
+NewTimer	::= TimerValue [AbsoluteTime] .
+SetTransparency	::= ":SetTransparency" "(" Target
+			NewTransparency ")" .
+SetVariable	::= ":SetVariable" "(" Target
+			NewVariableValue ")" .
+SetVolume	::= ":SetVolume" "(" Target NewVolume ")" .
+Spawn	::= ":Spawn" "(" Target ")" .
+Stop	::= ":Stop" "(" Target ")" .
+Step	::= ":Step" "(" Target NbOfSteps ")" .
+StorePersistent	::= ":StorePersistent" "(" Target
+			StoreSucceeded InVariables OutFileName
+			")" .
+Subtract	::= ":Subtract" "(" Target Value ")" .
+TestVariable	::= ":TestVariable" "(" Target Operator
+			ComparisonValue ")" .
+Toggle	::= ":Toggle" "(" Target ")" .
+ToggleItem	::= ":ToggleItem" "(" Target ItemIndex ")" .
+TransitionTo	::= ":TransitionTo" "(" Target ConnectionTag?
+			[TransitionEffect] ")" .
+Unload	::= ":Unload" "(" Target ")" .
+UnlockScreen	::= ":UnlockScreen" "(" Target ")" .
+SetBackgroundColour	::= ":SetBackgroundColour" "(" Target NewColour ")" .
+SetCellPosition	::= ":SetCellPosition" "(" Target Index XPosition YPosition ")" .
+SetInputReg	::= ":SetInputReg" "(" Target GenericInteger ")" .
+SetTextColour	::= ":SetTextColour" "(" Target NewColour ")" .
+SetFontAttributes	::= ":SetFontAttributes" "(" Target GenericOctetString ")" .
+SetVideoDecodeOffset	::= ":SetVideoDecodeOffset" "(" Target NewXOffset NewYOffset ")" .
+GetVideoDecodeOffset	::= ":GetVideoDecodeOffset" "(" Target XOffsetVar YOffsetVar ")" .
+GetFocusPosition	::= ":GetFocusPosition" "(" Target FocusPositionVar ")" .
+SetFocusPosition	::= ":SetFocusPosition" "(" Target NewFocusPosition ")" .
+SetBitmapDecodeOffset	::= ":SetBitmapDecodeOffset" "(" Target NewXOffset NewYOffset ")" .
+GetBitmapDecodeOffset	::= ":GetBitmapDecodeOffset" "(" Target XOffsetVar YOffsetVar ")" .
+SetSliderParameters	::= ":SetSliderParameters" "(" Target NewMinValue NewMaxValue NewStepSize ")" .
+
+
+AbsoluteTime		::= ":AbsoluteTime" GenericBoolean .
+Address			::= GenericOctetString .
+Answer			::= ObjectReference .
+AppendValue		::= GenericOctetString .
+ArcAngle		::= GenericInteger .
+AvailabilityStatusVar	::= ObjectReference .
+CallSucceeded		::= ObjectReference .
+CellIndex		::= GenericInteger .
+CloneRefVar		::= ObjectReference .
+ComparisonValue		::= NewGenericBoolean | NewGenericInteger
+				| NewGenericOctetString
+				| NewGenericObjectReference
+				| NewGenericContentReference .
+ConnectionTag		::= ":ConnectionTag" GenericInteger .
+Denominator		::= GenericInteger .
+EllipseHeight		::= GenericInteger .
+EllipseWidth		::= GenericInteger .
+EmulatedEventData	::= NewGenericBoolean | NewGenericInteger
+				| NewGenericOctetString .
+EmulatedEventSource	::= GenericObjectReference .
+EmulatedEventType	::= EventTypeEnum .
+EntryPointVar		::= ObjectReference .
+ForkSucceeded		::= ObjectReference .
+Feature			::= GenericOctetString .
+FillColourVar		::= ObjectReference .
+FirstItemVar		::= ObjectReference .
+HighlightStatusVar	::= ObjectReference .
+Index			::= GenericInteger .
+InFileName		::= GenericOctetString .
+InteractionStatusVar	::= ObjectReference .
+InVariables		::= "(" ObjectReference+ ")" .
+ItemIndex		::= GenericInteger .
+ItemRefVar		::= ObjectReference .
+ItemStatusVar		::= ObjectReference .
+ItemsToScroll		::= GenericInteger .
+LabelVar		::= ObjectReference .
+LastAnchorFiredVar	::= ObjectReference .
+LineColourVar		::= ObjectReference .
+LineStyleVar		::= ObjectReference .
+LineWidthVar		::= ObjectReference .
+MovementIdentifier	::= GenericInteger .
+NbOfSteps		::= GenericInteger .
+NewAbsoluteColour	::= ":NewAbsoluteColour" GenericOctetString .
+NewCachePriority	::= GenericInteger .
+NewColour		::= NewColourIndex | NewAbsoluteColour .
+NewColourIndex		::= ":NewColourIndex" GenericInteger .
+NewContent		::= NewIncludedContent | NewReferencedContent .
+NewContentCachePriority	::= ":NewCCPriority" GenericInteger .
+NewCounterEndPosition	::= GenericInteger .
+NewCounterPosition	::= GenericInteger .
+NewContentSize		::= ":NewContentSize" GenericInteger  .
+NewCounterValue		::= GenericInteger .
+NewCursorShape		::= GenericObjectReference .
+NewEntryPoint		::= GenericInteger .
+NewFirstItem		::= GenericInteger .
+NewFont			::= NewFontName | NewFontReference .
+NewFontName		::= NewGenericOctetString .
+NewFontReference	::= NewGenericObjectReference .
+NewGenericBoolean	::= ":GBoolean" GenericBoolean .
+NewGenericInteger	::= ":GInteger" GenericInteger .
+NewGenericOctetString	::= ":GOctetString" GenericOctetString .
+NewGenericObjectReference	::= ":GObjectRef" GenericObjectReference .
+NewGenericContentReference	::= ":GContentRef" GenericContentReference .
+NewHighlightStatus	::= GenericBoolean .
+NewIncludedContent	::= GenericOctetString .
+NewInteractionStatus	::= GenericBoolean .
+NewLabel		::= GenericOctetString .
+NewLineStyle		::= GenericInteger .
+NewLineWidth		::= GenericInteger .
+NewOverwriteMode	::= GenericBoolean .
+NewPaletteRef		::= GenericObjectReference .
+NewPortion		::= GenericInteger .
+NewReferencedContent	::= ":NewRefContent" "(" GenericContentReference
+				NewContentSize?
+				[NewContentCachePriority] ")" .
+NewSliderValue		::= GenericInteger .
+NewSpeed		::= Rational .
+NewTransparency		::= GenericInteger .
+NewVariableValue	::= NewGenericInteger | NewGenericBoolean
+				| NewGenericOctetString
+				| NewGenericObjectReference
+				| NewGenericContentReference .
+NewVolume		::= GenericInteger .
+NewXPosition		::= GenericInteger .
+NewYPosition		::= GenericInteger .
+Numerator		::= GenericInteger .
+OpenSucceeded		::= ObjectReference .
+Operator		::= GenericInteger .
+OutFileName		::= GenericOctetString .
+OutVariables		::= "(" ObjectReference+ ")" .
+OverwriteModeVar	::= ObjectReference .
+Parameter		::= NewGenericBoolean | NewGenericInteger
+				| NewGenericOctetString
+				| NewGenericObjectReference
+				| NewGenericContentReference .
+Parameters		::= Parameter+ .
+Point			::= "(" X Y ")" .
+PointList		::= "(" Point+ ")" .
+PortionVar		::= ObjectReference .
+Protocol		::= GenericOctetString .
+Rational		::= Numerator [Denominator] .
+ReadSucceeded		::= ObjectReference .
+ReferenceVisible	::= GenericObjectReference .
+RunningStatusVar	::= ObjectReference .
+SelectionStatusVar	::= ObjectReference .
+SizeVar			::= ObjectReference .
+SliderValueVar		::= ObjectReference .
+StartAngle		::= GenericInteger .
+StoreSucceeded		::= ObjectReference .
+Target			::= GenericObjectReference .
+TextContentVar		::= ObjectReference .
+TextDataVar		::= ObjectReference .
+TimerID			::= GenericInteger .
+TimerValue		::= GenericInteger.
+TokenPositionVar	::= ObjectReference .
+TransitionEffect	::= GenericInteger .
+TriggerIdentifier	::= GenericInteger .
+Value			::= GenericInteger .
+VisibleReference	::= GenericObjectReference .
+VolumeVar		::= ObjectReference .
+X			::= GenericInteger .
+X1			::= GenericInteger .
+X2			::= GenericInteger .
+XBoxSizeVar		::= ObjectReference .
+XCursor			::= GenericInteger .
+XNewBoxSize		::= GenericInteger .
+XOut			::= ObjectReference .
+XPositionVar		::= ObjectReference .
+XScale			::= GenericInteger .
+Y			::= GenericInteger .
+Y1			::= GenericInteger .
+Y2			::= GenericInteger .
+YBoxSizeVar		::= ObjectReference .
+YCursor			::= GenericInteger .
+YNewBoxSize		::= GenericInteger .
+YOut			::= ObjectReference .
+YPositionVar		::= ObjectReference .
+YScale			::= GenericInteger .
+XOffsetVar		::= ObjectReference .
+YOffsetVar		::= ObjectReference .
+NewXOffset		::= GenericInteger .
+NewYOffset		::= GenericInteger .
+FocusPositionVar	::= ObjectReference .
+NewFocusPosition	::= GenericInteger .
+NewMinValue		::= GenericInteger .
+NewMaxValue		::= GenericInteger .
+NewStepSize		::= GenericInteger .
+
+
+// B.4.43 Referencing Objects, Contents, Values, Colour and Position
+
+ObjectReference		::= ExternalReference | InternalReference .
+ExternalReference	::= "(" GroupIdentifier ObjectNumber ")" .
+InternalReference	::= ObjectNumber .
+GroupIdentifier		::= OctetString .
+ObjectNumber		::= INTEGER .
+
+ContentReference	::= OctetString .
+// srk - ContentReference is [69] except in ReferencedContent
+ContentReference69	::= OctetString .
+
+GenericObjectReference	::= DirectReference | IndirectReference .
+DirectReference		::= ObjectReference .
+IndirectReference	::= ":IndirectRef" ObjectReference .
+
+GenericContentReference	::= ContentReference69 | IndirectReference .
+
+GenericInteger		::= INTEGER | IndirectReference .
+
+GenericBoolean		::= BOOLEAN | IndirectReference .
+
+GenericOctetString	::= OctetString | IndirectReference .
+
+OctetString		::= STRING | QPRINTABLE | BASE64 .
+
+Colour			::= ColourIndex | AbsoluteColour .
+ColourIndex		::= INTEGER .
+AbsoluteColour		::= OctetString .
+
+XYPosition		::= XPosition YPosition .
+XPosition		::= INTEGER .
+YPosition		::= INTEGER .

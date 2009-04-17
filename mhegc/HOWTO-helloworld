@@ -1,0 +1,9 @@
+To compile the helloworld example:
+
+mhegc -o helloworld/startup helloworld/startup.txt
+mhegc -o helloworld/hello.mhg helloworld/hello.mhg.txt
+
+To run it:
+
+rb-browser helloworld/
+

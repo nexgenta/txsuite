@@ -1,0 +1,25 @@
+// MHEG5 Hello World app
+//
+// http://www.digvid.info/mheg5/hello_world.php
+//
+
+{:Application
+    ( '/startup' 0 )        // Application content reference
+    :Items (
+        {:Link
+            1
+            :EventSource 0          // Check this application...
+            :EventType IsRunning    // ... for the IsRunning event
+            :LinkEffect (
+                // Load the scene
+                :TransitionTo (( '~/hello.mhg' 0 ) )
+            )
+        }
+    )
+    :BackgroundColour '=FF=FF=FF=00'    // White
+    :TextCHook 10                       // Default text content hook
+    :TextColour '=00=00=00=00'          // Black
+    :Font "rec://font/uk1"              // Font to use for text rendering
+    :FontAttributes "plain.26.32.0"     // Default font attributes
+    :BitmapCHook 4                      // Default bitmap content hook
+}

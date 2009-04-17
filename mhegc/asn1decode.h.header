@@ -1,0 +1,15 @@
+#ifndef __ASN1DECODE_H__
+#define __ASN1DECODE_H__
+
+#include <stdio.h>
+#include <stdbool.h>
+
+int asn1decode_BOOLEAN(FILE *, FILE *, int);
+bool is_BOOLEAN(unsigned char, unsigned int);
+
+int asn1decode_INTEGER(FILE *, FILE *, int);
+bool is_INTEGER(unsigned char, unsigned int);
+
+int asn1decode_Null(FILE *, FILE *, int);
+bool is_Null(unsigned char, unsigned int);
+
