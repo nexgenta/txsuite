@@ -1,6 +1,7 @@
 ccc
 mhegc
 mhegd
+berdecode
 ccc.c
 ccc.h
 ccclex.c
@@ -9,3 +10,5 @@ parselex.c
 parser.c
 parser.h
 tokens.h
+asn1decode.c
+asn1decode.h
