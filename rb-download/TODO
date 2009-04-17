@@ -1,0 +1,21 @@
+need to kill all existing command connections on retune
+(listen_data->carousel is stale for them)
+
+got an "Out of memory" error when doing avstream and video changed size
+(start of C4 news)
+can't see how avstream can cause an out of memory error
+
+look into new splice() and tee() syscalls in 2.6.17 kernel for avstream
+
+be able to read from a file
+
+use a linked list of modules rather than an array in struct carousel
+=> easier to delete/add modules
+
+transactionId in DII messages is a version number
+=> need to download again if it gets bigger
+(we currently just look at the module version, is this enough?)
+
+create carousels/PID/CID dir in add_dsmcc_pid()
+(may need to use carousels/<assoc_tag> as stream2pid may return 0)
+
