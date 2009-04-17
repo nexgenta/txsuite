@@ -1,0 +1,14 @@
+Tiresias ScreenFont
+===================
+
+If you don't have a copy of this font, it is distributed with the Nebula DigiTV
+iTuner application.
+Download it from here:
+http://www.nebula-electronics.com/
+install DigiTV iTuner on a Windows box, then you can copy the font from:
+C:\Windows\Fonts\tt7268m_802.ttf
+
+To install the font in KDE, open Control Centre, go to System Administration
+and select Font Installer - you can then use the Add Fonts... button to select
+the tt7268m_802.ttf file and install it.
+

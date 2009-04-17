@@ -1,0 +1,69 @@
+got this once when changing channels:
+X Error of failed request:  BadAccess (attempt to access private resource denied)
+  Major opcode of failed request:  146 (MIT-SHM)
+  Minor opcode of failed request:  1 (X_ShmAttach)
+  Serial number of failed request:  4292
+  Current serial number in output stream:  4385
+
+
+posix_fadvise() when streaming data from the backend?
+
+
+aspect ratio
+
+
+if video size != VideoClass size, draw a smaller transparent hole
+or fill the frame edges with black
+also fill with black after SetVideoDecodeOffset
+
+
+use ffmpeg to permenantly scale-up bitmaps in MHEGBitmap_fromRGBA
+(rather than having to apply an XRender xform matrix and filter each time)
+
+
+vsync video drawing with monitor refresh
+
+
+better audio sync in MHEGStreamPlayer
+
+
+in all VisibleClass objects
+only redraw them in SetPosition/SetBoxSize/etc if they actually move/change size/etc
+
+
+print avstream error message in rb-browser if openStream fails
+
+
+only use -t timeout when searching for boot obj?
+all other times raise ContentRefError immediately?
+
+
+handle SIGPIPE - default handler terminates the process
+
+
+are all inherited instance vars added to classes?
+
+
+use a timer to poll for missing content once/second?
+
+
+do the remaining Clone methods
+
+
+make sure caller_gid doesnt get passed on too far from ElementaryAction_execute
+(eg TokenGroupClass_CallActionSlot)
+
+
+cope with CI: filename prefixes
+see 8.3.2 in UK MHEG Profile
+
+
+have a monitor/debugger console
+
+
+change fatal()'s to error()'s where possible
+
+
+change all LIST macros to take TYPE as first param
+
+

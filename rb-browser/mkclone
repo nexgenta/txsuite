@@ -1,0 +1,48 @@
+#!/bin/bash
+#
+# mkclone
+#
+# create _dup methods for the types in mkclone.conf
+#
+# Simon Kilvington, 30/1/2006
+
+CONF=mkclone.conf
+
+CFILE=clone.c
+HFILE=clone.h
+
+# clone.h header
+echo -e "/*\n * ${HFILE}\n *" > ${HFILE}
+echo -e " * This file was automatically generated. Do not edit!" >> ${HFILE}
+echo -e " */\n" >> ${HFILE}
+echo -e "#ifndef __CLONE_H__\n#define __CLONE_H__\n" >> ${HFILE}
+echo -e "#include \"ISO13522-MHEG-5.h\"" >> ${HFILE}
+echo -e "#include \"RootClass.h\"\n" >> ${HFILE}
+
+# clone.c header
+echo -e "/*\n * ${CFILE}\n *" > ${CFILE}
+echo -e " * This file was automatically generated. Do not edit!" >> ${CFILE}
+echo -e " */\n" >> ${CFILE}
+echo -e "#include \"clone.h\"" >> ${CFILE}
+echo -e "\n/*\n * the _copy methods free any existing data in dst" >> ${CFILE}
+echo -e " * for _dup methods, any existing data in dst will be lost" >> ${CFILE}
+echo -e " */\n" >> ${CFILE}
+
+# for each type in the config file
+for TYPE in `cat ${CONF}`; do
+	echo ${TYPE}
+	echo "void ${TYPE}_dup(${TYPE} *, ${TYPE} *);" >> ${HFILE}
+	echo "void ${TYPE}_copy(${TYPE} *, ${TYPE} *);" >> ${HFILE}
+	echo >> ${HFILE}
+	# TYPE_dup
+	xsltproc --stringparam TYPE ${TYPE} mkclone.xslt ISO13522-MHEG-5.xsd >> ${CFILE}
+	# TYPE_copy
+	echo -e "\nvoid\n${TYPE}_copy(${TYPE} *dst, ${TYPE} *src)\n{" >> ${CFILE}
+	echo -e "\tfree_${TYPE}(dst);\n" >> ${CFILE}
+	echo -e "\t${TYPE}_dup(dst, src);\n" >> ${CFILE}
+	echo -e "\treturn;\n}" >> ${CFILE}
+done
+
+# clone.h footer
+echo -e "#endif\t/* __CLONE_H__ */\n" >> ${HFILE}
+

@@ -1,0 +1,60 @@
+#!/bin/bash
+#
+# add_rtti <file.c>
+#
+# generates rtti.h on stdout
+# for each type listed in add_rtti.conf
+#  sets rootClass.inst.rtti in der_decode routine in file.c
+#
+# Simon Kilvington, 3/11/2005
+
+if [ $# -ne 1 ]; then
+	echo "Syntax: $0 <file.c>"
+	exit 1
+fi
+
+CFILE=$1
+
+CONF=add_rtti.conf
+
+TMP_FILE=/tmp/$0.$$
+
+# add extra includes
+awk '{print $0} /#include "ISO13522-MHEG-5.h"/ {printf "#include \"MHEGEngine.h\"\n#include \"rtti.h\"\n"}' ${CFILE} > ${TMP_FILE}
+mv -f ${TMP_FILE} ${CFILE}
+
+# rtti.h
+echo "/*"
+echo " * rtti.h"
+echo " *"
+echo " * This file was automatically generated. Do not edit!"
+echo " */"
+echo
+echo "#ifndef __RTTI_H__"
+echo "#define __RTTI_H__"
+echo
+echo "#define RTTI_Unknown 0"
+
+# for each type in the config file (basically each class derived from RootClass)
+N=1
+for LINE in `cat ${CONF}`; do
+	TYPE=`echo ${LINE} | awk -F: '{print $1}'`
+	BASE=`echo ${LINE} | awk -F: '{print $2}'`
+	echo "#define RTTI_${TYPE} ${N}"
+	# does it have a base class
+	if [ "x${BASE}" == "x" ]; then
+		# set rootClass.inst.rtti at the end of der_decode_${TYPE}()
+		awk "BEGIN {f=0} /^der_decode_${TYPE}\\(/ {f=1} /return length;/ {if(f==1) {printf \"\ttype->rootClass.inst.rtti = RTTI_${TYPE};\\n\\n\"}; f=0} {print \$0}" ${CFILE} > ${TMP_FILE}
+	else
+		# set ${BASE}.rootClass.inst.rtti
+		awk "BEGIN {f=0} /^der_decode_${TYPE}\\(/ {f=1} /return length;/ {if(f==1) {printf \"\ttype->${BASE}.rootClass.inst.rtti = RTTI_${TYPE};\\n\\n\"}; f=0} {print \$0}" ${CFILE} > ${TMP_FILE}
+	fi
+	mv -f ${TMP_FILE} ${CFILE}
+	N=$(( ${N} + 1 ))
+done
+
+echo
+echo -e "#endif\t/* __RTTI_H__ */"
+echo
+
+

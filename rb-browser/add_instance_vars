@@ -1,0 +1,67 @@
+#!/bin/bash
+#
+# add_instance_vars <file.c> <file.h>
+#
+# for each type listed in add_instance_vars.conf, it:
+#  adds <type>InstanceVars to struct <type> in file.h
+# also adds (in file.c):
+#  a call to RootClass_registerObject() in der_decode_RootClass()
+#  a call to RootClass_unregisterObject() in free_RootClass()
+#
+# Simon Kilvington, 8/12/2005
+
+if [ $# -ne 2 ]; then
+	echo "Syntax: $0 <file.c> <file.h>"
+	exit 1
+fi
+
+CFILE=$1
+HFILE=$2
+
+CONF=add_instance_vars.conf
+
+TMP_FILE=/tmp/$0.$$
+
+# process each type in the config file
+for TYPE in `awk '/^<[^\/]/ {print substr($0, 2, length($0)-2)}' ${CONF}`; do
+	echo $TYPE
+	# for normal types we have typedef struct { ... } TYPE;
+	# so we can just add TYPEInstanceVars to the struct, but...
+	# if the type is just an alias for another type, we have typedef X TYPE;
+	# and have nowhere to add the TYPEInstanceVars
+	# so if we get an alias, expand it to typedef struct { X X } TYPE;
+	grep "^typedef .* ${TYPE};\$" ${HFILE}
+	if [ $? -eq 0 ]; then
+		# expand it into a struct in the .h file
+		awk "/^typedef.* ${TYPE};\$/ {printf \"typedef struct %s\n{\n\t%s %s;\n} %s\n\", substr(\$3, 1, length(\$3)-1), \$2, \$2, \$3; next} {print \$0}" ${HFILE} > ${TMP_FILE}
+		mv -f ${TMP_FILE} ${HFILE}
+		# use the expanded type in der_decode_TYPE()
+		awk "BEGIN {f=0} /^der_decode_${TYPE}/ {f=1} /sublen = der_decode_/ {if(f==1) {printf \"\tsublen = %s &type->%s, %s\n\", \$3, substr(\$4, 2), \$7; f=0; next}} {print \$0}" ${CFILE} > ${TMP_FILE}
+		mv -f ${TMP_FILE} ${CFILE}
+		# use the expanded type in free_TYPE()
+		awk -F\( "BEGIN {f=0} /^free_${TYPE}/ {f=1} /^\tfree_.*type\);\$/ {if(f==1) {printf \"%s(&type->%s);\n\", \$1, substr(\$1, 7, length(\$1)-6); f=0; next}} {print \$0}" ${CFILE} > ${TMP_FILE}
+		mv -f ${TMP_FILE} ${CFILE}
+	fi
+	# copy the .h file upto the typedef for TYPE into tmp file
+	awk "BEGIN {f=1} /^typedef struct ${TYPE}\$/ {f=0} {if(f==1) print \$0}" ${HFILE} > ${TMP_FILE}
+	# extract TYPEInstanceVars from config file and add it to tmp file
+	awk "/<${TYPE}>/ {f=1; next} /<\/${TYPE}>/ {f=0} {if(f==1) print \$0}" ${CONF} >> ${TMP_FILE}
+	echo >> ${TMP_FILE}
+	# copy the rest of .h file to the end of tmp file
+	awk "BEGIN {f=0} /^typedef struct ${TYPE}$/ {f=1} {if(f==1) print \$0}" ${HFILE} >> ${TMP_FILE}
+	mv -f ${TMP_FILE} ${HFILE}
+	# add TYPEInstanceVars to TYPE in .h file
+	awk "/^} ${TYPE};/ {printf \"\t/* instance variables */\n\t%sInstanceVars inst;\n\", substr(\$2, 1, length(\$2)-1)} {print \$0}" ${HFILE} > ${TMP_FILE}
+	mv -f ${TMP_FILE} ${HFILE}
+done
+
+# add the RootClass.h include
+sed -i -e 's/#include "ISO13522-MHEG-5.h"/&\n#include "RootClass.h"/' ${CFILE}
+
+# call RootClass_registerObject() in der_decode_RootClass()
+awk "BEGIN {f=0} /^der_decode_RootClass/ {f=1} /return length/ {if(f==1) {printf \"\tRootClass_registerObject(type);\n\n\"; f=0}} {print \$0}" ${CFILE} > ${TMP_FILE}
+mv -f ${TMP_FILE} ${CFILE}
+# call RootClass_unregisterObject() in free_RootClass()
+awk "BEGIN {f=0} /^free_RootClass/ {f=1} /return;/ {if(f==1) {printf \"\tRootClass_unregisterObject(type);\n\n\"; f=0}} {print \$0}" ${CFILE} > ${TMP_FILE}
+mv -f ${TMP_FILE} ${CFILE}
+
