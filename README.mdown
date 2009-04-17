@@ -1,4 +1,4 @@
-= Transmission Suite
+# Transmission Suite
 
 This is a collection of tools and utilities pulled from various places
 for use when preparing multimedia content for broadcast.
