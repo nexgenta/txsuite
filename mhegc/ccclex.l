@@ -1,7 +1,7 @@
 %{
 #include <string.h>
 #define YYSTYPE char *
-#include "ccc.tab.h"
+#include "ccc.h"
 extern unsigned int lineno;
 %}
 %%
