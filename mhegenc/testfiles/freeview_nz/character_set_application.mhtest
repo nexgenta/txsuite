@@ -1,0 +1,70 @@
+// Test file for the NZ profile extended character set.
+// Tests accessing the character set using application DefaultAttributes.
+// Ref mheg_nz_v1.0.2:2.2.1.3
+{ :Application ( '/startup' 0 ) 
+  :Items (
+    { :Text 1
+      :OrigContent 'This text should use the Maori character set package' 
+      :OrigBoxSize 585 30
+      :OrigPosition 65 500
+    }
+  )
+  :CharacterSet 10
+  :TextCHook 10
+  :Font 'rec://font/uk1' 
+  :FontAttributes '=00=18=1A=00=00' 
+  :TextColour '=FF=FF=FF=00' 
+  :BitmapCHook 4
+}
+<InterchangedObject>
+    <application>
+        <rootclass>
+            <external-reference>
+                <group-identifier>2F 73 74 61 72 74 75 70</group-identifier>
+                <object-number>0</object-number>
+            </external-reference>
+        </rootclass>
+        <items>
+                <text>
+                    <rootclass>
+                        <internal-reference>1</internal-reference>
+                    </rootclass>
+                    <original-content>
+                        <included-content>
+                            54 68 69 73 20 74 65 78 74 20 73 68 6F 75 6C 64 
+                            20 75 73 65 20 74 68 65 20 4D 61 6F 72 69 20 63 
+                            68 61 72 61 63 74 65 72 20 73 65 74 20 70 61 63 
+                            6B 61 67 65
+                        </included-content>
+                    </original-content>
+                    <original-box-size>
+                        <x-length>585</x-length>
+                        <y-length>30</y-length>
+                    </original-box-size>
+                    <original-position>
+                        <x-position>65</x-position>
+                        <y-position>500</y-position>
+                    </original-position>
+                </text>
+            
+        </items>
+        <default-attributes>
+                <character-set>10</character-set>
+            
+                <text-content-hook>10</text-content-hook>
+            
+                <font>
+                    <direct-font>72 65 63 3A 2F 2F 66 6F 6E 74 2F 75 6B 31</direct-font>
+                </font>
+            
+                <font-attributes>00 18 1A 00 00</font-attributes>
+            
+                <text-colour>
+                    <absolute-colour>FF FF FF 00</absolute-colour>
+                </text-colour>
+            
+                <bitmap-content-hook>4</bitmap-content-hook>
+            
+        </default-attributes>
+    </application>
+</InterchangedObject>

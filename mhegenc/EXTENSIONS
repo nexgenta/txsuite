@@ -1,0 +1,46 @@
+mhegenc will allow the following extensions as per UK profile 1.06 draft 11
+
+Group
+-----
+- Timers are now an attribute of group rather than scene.
+
+Scene
+-----
+- AspectRatio is OPTIONAL (no default)
+
+TokenGroup
+----------
+- TokenGroupItems is OPTIONAL
+
+Stream
+------
+- Multiplex is OPTIONAL.
+
+
+New ElementaryActions
+=====================
+
+ - SetBackgroundColour
+ - SetCellPosition
+ - SetFontAttributes
+ - SetInputRegister
+ - SetTextColour
+ - GetFocusPosition
+ - SetFocusPosition
+ - SetBitmapDecodeOffset
+ - GetBitmapDecodeOffset
+ - SetVideoDecodeOffset
+ - GetVideoDecodeOffset
+ - SetSliderParameters
+
+New Events
+==========
+
+- FocusMoved
+- SliderValueChanged
+
+mhegenc will encode and decode SetDesktopColour and OrigDesktopColour
+for the freesat extensions.
+
+
+mhegenc will also ignore C preprocessor directives.

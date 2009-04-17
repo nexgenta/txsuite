@@ -1,0 +1,55 @@
+Brief instructions for 'mhegenc'
+--------------------------------
+These are some simple instructions for the mhegenc ASN.1 <-> Text notation
+convertor. These replace the README distributed with the source.
+
+Encoding to ASN.1
+-----------------
+
+Simple encode:
+
+        mhegenc -o outfile infile
+
+if you miss out the outfile, it will take the infile (minus any extension) and
+append .asn to make an out file (be careful, this will trash previous files).
+
+Encoding to Textual Notation
+----------------------------
+
+Simple decode:
+
+        mhegenc -d -o outfile infile
+
+if you miss out the outfile, it will take the infile (minus any extension) and
+append .mhg to make an out file (be careful, this will trash previous files).
+
+Comments:
+ To include comments (recomended) add the -c switch.
+
+Options
+-------
+Debug:
+ Only really usefull if you have the source: -d will instruct the parser to 
+   dump traces (v. noisy)
+
+Warnings and optimisation:
+ -W and -O are barely supported, so it's not really worth it.
+
+Language
+--------
+The language accepted should be UK-DTT 1.06 plus expressions. 
+
+'C' preprocessor directives are ignored (not sure if that breaks the
+language!) so cpp can be used to include definitions and name variables. 
+ 
+The converter is fairly strict so tags must be in the order specified in the
+ISO Appendix B. Please note that some problems have been experienced with
+other converters that are not compliant and some source wont run through
+both. Dispite this, we are sticking to the 'correct' language.
+
+Simple expresions can be used anywhere that an INTERGER is expected. This was
+implemented to make relative positioning eaisier.
+
+NOTE: BASE64 is NOT implemented in this revision. 
+
+Any requests should be directed to mhegenc@spongelava.com

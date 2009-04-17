@@ -1,0 +1,133 @@
+// Test file for the SetDesktopColour ElementaryAction
+{ :Application ( '/startup' 0 ) 
+  :Items (
+    { :Link 1
+      :EventSource 0
+      :EventType IsRunning
+      :LinkEffect (
+        :SetDesktopColour ( ( '/startup' 0 ) :NewAbsoluteColour '=00=7F=7F=00' )
+        :SetDesktopColour ( ( '/startup' 0 ) :NewColourIndex 1 )
+        :SetDesktopColour ( ( '/startup' 0 ) :NewAbsoluteColour :IndirectRef 9 )
+        :SetDesktopColour ( ( '/startup' 0 ) :NewColourIndex :IndirectRef 8 )
+      )
+    }
+    { :IntegerVar 8
+      :OrigValue 0 
+    }
+    { :OStringVar 9 
+      :OrigValue '' 
+    }
+  )
+}
+<InterchangedObject>
+    <application>
+        <rootclass>
+            <external-reference>
+                <group-identifier>2F 73 74 61 72 74 75 70</group-identifier>
+                <object-number>0</object-number>
+            </external-reference>
+        </rootclass>
+        <items>
+            <link>
+                <rootclass>
+                    <internal-reference>1</internal-reference>
+                </rootclass>
+                <link-condition>
+                    <event-source>
+                        <internal-reference>0</internal-reference>
+                    </event-source>
+                    <event-type><is-running/></event-type>
+                </link-condition>
+                <link-effect>
+                    <set-desktop-colour> 
+                        <target>
+                            <direct-reference>
+                                <external-reference>
+                                    <group-identifier>2F 73 74 61 72 74 75 70</group-identifier>
+                                    <object-number>0</object-number>
+                                </external-reference>
+                            </direct-reference>
+                        </target>
+                        <new-desktop-colour>
+                            <new-absolute-colour>
+                                <octetstring>00 7F 7F 00</octetstring>
+                            </new-absolute-colour>
+                        </new-desktop-colour>
+                    </set-desktop-colour>
+
+                    <set-desktop-colour> 
+                        <target>
+                            <direct-reference>
+                                <external-reference>
+                                    <group-identifier>2F 73 74 61 72 74 75 70</group-identifier>
+                                    <object-number>0</object-number>
+                                </external-reference>
+                            </direct-reference>
+                        </target>
+                        <new-desktop-colour>
+                            <new-colour-index>
+                                <integer>1</integer>
+                            </new-colour-index>
+                        </new-desktop-colour>
+                    </set-desktop-colour>
+
+                    <set-desktop-colour> 
+                        <target>
+                            <direct-reference>
+                                <external-reference>
+                                    <group-identifier>2F 73 74 61 72 74 75 70</group-identifier>
+                                    <object-number>0</object-number>
+                                </external-reference>
+                            </direct-reference>
+                        </target>
+                        <new-desktop-colour>
+                            <new-absolute-colour>
+                                <indirect-reference>
+                                    <internal-reference>9</internal-reference>
+                                </indirect-reference>
+                            </new-absolute-colour>
+                        </new-desktop-colour>
+                    </set-desktop-colour>
+
+                    <set-desktop-colour> 
+                        <target>
+                            <direct-reference>
+                                <external-reference>
+                                    <group-identifier>2F 73 74 61 72 74 75 70</group-identifier>
+                                    <object-number>0</object-number>
+                                </external-reference>
+                            </direct-reference>
+                        </target>
+                        <new-desktop-colour>
+                            <new-colour-index>
+                                <indirect-reference>
+                                    <internal-reference>8</internal-reference>
+                                </indirect-reference>
+                            </new-colour-index>
+                        </new-desktop-colour>
+                    </set-desktop-colour>
+
+                </link-effect>
+            </link>
+
+            <integer-variable>
+                <rootclass>
+                    <internal-reference>8</internal-reference>
+                </rootclass>
+                <original-value>
+                    <integer>0</integer>
+                </original-value>
+            </integer-variable>
+
+            <octet-string-variable>
+                <rootclass>
+                    <internal-reference>9</internal-reference>
+                </rootclass>
+                <original-value>
+                    <octetstring></octetstring>
+                </original-value>
+            </octet-string-variable>
+
+        </items>
+    </application>
+</InterchangedObject>

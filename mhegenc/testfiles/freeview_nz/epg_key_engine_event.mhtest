@@ -1,0 +1,58 @@
+// Test file for the NZ profile EPGKeyFunction engine event.
+// Tests that the encoder will accept the value.
+// Ref mheg_nz_v1.0.2:2.3.1.3
+{ :Application ( '/startup' 0 ) 
+  :Items (
+    { :Link 61 
+      :EventSource ( '~/a' 0 ) 
+      :EventType EngineEvent 
+      :EventData 300
+      :LinkEffect (
+        :SetInputReg ( 0 13 ) 
+      )
+    }
+  )
+}
+<InterchangedObject>
+    <application>
+        <rootclass>
+            <external-reference>
+                <group-identifier>2F 73 74 61 72 74 75 70</group-identifier>
+                <object-number>0</object-number>
+            </external-reference>
+        </rootclass>
+        <items>
+                <link>
+                    <rootclass>
+                        <internal-reference>61</internal-reference>
+                    </rootclass>
+                    <link-condition>
+                        <event-source>
+                            <external-reference>
+                                <group-identifier>7E 2F 61</group-identifier>
+                                <object-number>0</object-number>
+                            </external-reference>
+                        </event-source>
+                        <event-type><engine-event/></event-type>
+                        <event-data>
+                            <integer>300</integer>
+                        </event-data>
+                    </link-condition>
+                    <link-effect>
+                            <set-input-register>
+                                <target>
+                                    <direct-reference>
+                                        <internal-reference>0</internal-reference>
+                                    </direct-reference>
+                                </target>
+                                <new-input-register>
+                                    <integer>13</integer>
+                                </new-input-register>
+                            </set-input-register>
+                        
+                    </link-effect>
+                </link>
+            
+        </items>
+    </application>
+</InterchangedObject>

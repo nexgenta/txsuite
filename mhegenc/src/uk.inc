@@ -1,0 +1,39 @@
+// -*- mheg -*- 
+
+#define Key_Up           		1
+#define Key_Down         		2
+#define Key_Left         		3
+#define Key_Right         		4
+#define Key_0	         		5
+#define Key_1	         		6
+#define Key_2	         		7
+#define Key_3	         		8
+#define Key_4	         		9
+#define Key_5	         		10
+#define Key_6	         		11
+#define Key_7	         		12
+#define Key_8	         		13
+#define Key_9	         		14
+#define Key_Select         		15
+#define Key_OK         			15
+#define Key_Cancel         		16
+#define Key_Exit         		16
+#define Key_Help         		17
+#define Key_Red         		100
+#define Key_Green         		101
+#define Key_Yellow         		102
+#define Key_Blue         		103
+#define Key_Text         		104
+
+#define Engine_GroupIDRefError		2
+#define Engine_ContentRefError		3
+#define Engine_TextFunction		4
+#define Engine_TextKeyFunction		Engine_TextFunction
+#define Engine_VideoPrefChanged		6
+#define Engine_PauseResume		7
+#define Engine_NetworkBootInfo		9
+#define Engine_CancelKeyFunction	16
+#define Engine_RedKeyFunction		100
+#define Engine_GreenKeyFunction		101
+#define Engine_YellowKeyFunction	102
+#define Engine_BlueKeyFunction		103

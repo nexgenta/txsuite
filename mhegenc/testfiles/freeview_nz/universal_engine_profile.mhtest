@@ -1,0 +1,83 @@
+// Test file for the NZ profile UniversalEngineProfile GetEngineSupport 
+// feature string.
+// Tests that the encoder doesn't have a problem with the required format.
+// Ref mheg_nz_v1.0.2:2.1.1.1
+{ :Application ( '/startup' 0 ) 
+  :Items (
+    { :Link 1000 
+      :EventSource 0 
+      :EventType IsRunning 
+      :LinkEffect (
+        :GetEngineSupport ( ( '~/startup' 0 ) 'UniversalEngineProfile(INT002001000000)' 100 ) 
+        :GetEngineSupport ( ( '~/startup' 0 ) 'UEP(INT002001000000)' 101 ) 
+      )
+    }
+  )
+}
+<InterchangedObject>
+    <application>
+        <rootclass>
+            <external-reference>
+                <group-identifier>2F 73 74 61 72 74 75 70</group-identifier>
+                <object-number>0</object-number>
+            </external-reference>
+        </rootclass>
+        <items>
+                <link>
+                    <rootclass>
+                        <internal-reference>1000</internal-reference>
+                    </rootclass>
+                    <link-condition>
+                        <event-source>
+                            <internal-reference>0</internal-reference>
+                        </event-source>
+                        <event-type><is-running/></event-type>
+                    </link-condition>
+                    <link-effect>
+                            <get-engine-support>
+                                <target>
+                                    <direct-reference>
+                                        <external-reference>
+                                            <group-identifier>7E 2F 73 74 61 72 74 75 70</group-identifier>
+                                            <object-number>0</object-number>
+                                        </external-reference>
+                                    </direct-reference>
+                                </target>
+                                <feature>
+                                    <octetstring>
+                                        55 6E 69 76 65 72 73 61 6C 45 6E 67 69 6E 65 50 
+                                        72 6F 66 69 6C 65 28 49 4E 54 30 30 32 30 30 31 
+                                        30 30 30 30 30 30 29
+                                    </octetstring>
+                                </feature>
+                                <answer>
+                                    <internal-reference>100</internal-reference>
+                                </answer>
+                            </get-engine-support>
+                        
+                            <get-engine-support>
+                                <target>
+                                    <direct-reference>
+                                        <external-reference>
+                                            <group-identifier>7E 2F 73 74 61 72 74 75 70</group-identifier>
+                                            <object-number>0</object-number>
+                                        </external-reference>
+                                    </direct-reference>
+                                </target>
+                                <feature>
+                                    <octetstring>
+                                        55 45 50 28 49 4E 54 30 30 32 30 30 31 30 30 30 
+                                        30 30 30 29
+                                    </octetstring>
+                                </feature>
+                                <answer>
+                                    <internal-reference>101</internal-reference>
+                                </answer>
+                            </get-engine-support>
+                        
+                    </link-effect>
+                </link>
+            
+        </items>
+    </application>
+</InterchangedObject>

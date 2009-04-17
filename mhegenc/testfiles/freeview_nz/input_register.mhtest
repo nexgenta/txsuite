@@ -1,0 +1,139 @@
+// Test file for the NZ profile input registers.
+// Tests that the encoder will accept the values.
+// Ref mheg_nz_v1.0.2:2.3.1.2
+{ :Application ( '/startup' 0 ) 
+  :Items (
+    { :Link 1100 
+      :EventSource 0 
+      :EventType UserInput 
+      :EventData 300 
+      :LinkEffect (
+        :SetInputReg ( 0 1 ) 
+        :SetInputReg ( 0 2 ) 
+        :SetInputReg ( 0 3 ) 
+        :SetInputReg ( 0 4 ) 
+        :SetInputReg ( 0 5 ) 
+        :SetInputReg ( 0 13 ) 
+        :SetInputReg ( 0 14 ) 
+        :SetInputReg ( 0 15 ) 
+      )
+    }
+  )
+}
+<InterchangedObject>
+    <application>
+        <rootclass>
+            <external-reference>
+                <group-identifier>2F 73 74 61 72 74 75 70</group-identifier>
+                <object-number>0</object-number>
+            </external-reference>
+        </rootclass>
+        <items>
+                <link>
+                    <rootclass>
+                        <internal-reference>1100</internal-reference>
+                    </rootclass>
+                    <link-condition>
+                        <event-source>
+                            <internal-reference>0</internal-reference>
+                        </event-source>
+                        <event-type><user-input/></event-type>
+                        <event-data>
+                            <integer>300</integer>
+                        </event-data>
+                    </link-condition>
+                    <link-effect>
+                            <set-input-register>
+                                <target>
+                                    <direct-reference>
+                                        <internal-reference>0</internal-reference>
+                                    </direct-reference>
+                                </target>
+                                <new-input-register>
+                                    <integer>1</integer>
+                                </new-input-register>
+                            </set-input-register>
+                        
+                            <set-input-register>
+                                <target>
+                                    <direct-reference>
+                                        <internal-reference>0</internal-reference>
+                                    </direct-reference>
+                                </target>
+                                <new-input-register>
+                                    <integer>2</integer>
+                                </new-input-register>
+                            </set-input-register>
+                        
+                            <set-input-register>
+                                <target>
+                                    <direct-reference>
+                                        <internal-reference>0</internal-reference>
+                                    </direct-reference>
+                                </target>
+                                <new-input-register>
+                                    <integer>3</integer>
+                                </new-input-register>
+                            </set-input-register>
+                        
+                            <set-input-register>
+                                <target>
+                                    <direct-reference>
+                                        <internal-reference>0</internal-reference>
+                                    </direct-reference>
+                                </target>
+                                <new-input-register>
+                                    <integer>4</integer>
+                                </new-input-register>
+                            </set-input-register>
+                        
+                            <set-input-register>
+                                <target>
+                                    <direct-reference>
+                                        <internal-reference>0</internal-reference>
+                                    </direct-reference>
+                                </target>
+                                <new-input-register>
+                                    <integer>5</integer>
+                                </new-input-register>
+                            </set-input-register>
+                        
+                            <set-input-register>
+                                <target>
+                                    <direct-reference>
+                                        <internal-reference>0</internal-reference>
+                                    </direct-reference>
+                                </target>
+                                <new-input-register>
+                                    <integer>13</integer>
+                                </new-input-register>
+                            </set-input-register>
+                        
+                            <set-input-register>
+                                <target>
+                                    <direct-reference>
+                                        <internal-reference>0</internal-reference>
+                                    </direct-reference>
+                                </target>
+                                <new-input-register>
+                                    <integer>14</integer>
+                                </new-input-register>
+                            </set-input-register>
+                        
+                            <set-input-register>
+                                <target>
+                                    <direct-reference>
+                                        <internal-reference>0</internal-reference>
+                                    </direct-reference>
+                                </target>
+                                <new-input-register>
+                                    <integer>15</integer>
+                                </new-input-register>
+                            </set-input-register>
+                        
+                    </link-effect>
+                </link>
+            
+        </items>
+    </application>
+</InterchangedObject>

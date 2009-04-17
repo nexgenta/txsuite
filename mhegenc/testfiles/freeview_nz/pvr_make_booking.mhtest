@@ -1,0 +1,146 @@
+// Test file for the NZ profile PVR_MakeBooking() ResidentProgram.
+// Tests that the encoder will accept the rp format.
+// Ref mheg_nz_v1.0.2:2.4.4.1
+{ :Application ( '/startup' 0 ) 
+  :Items (
+    { :ResidentPrg 1 
+      :InitiallyActive FALSE
+      :Name 'PMB' 
+    }
+    { :BooleanVar 2 
+      :OrigValue FALSE 
+    }
+    { :Link 3
+      :InitiallyActive FALSE
+      :EventSource 0 
+      :EventType IsRunning 
+      :LinkEffect (
+        :Call ( 1 2 
+                :GOctetString :IndirectRef 201 
+                :GInteger 49
+                :GOctetString 'myfav'
+                :GOctetString 'my favourite program'
+                :GInteger :IndirectRef 202
+        ) 
+        :TestVariable ( 2 1 :GBoolean TRUE ) 
+        :TestVariable ( 202 1 :GInteger 0 ) 
+      )
+    }
+  )
+}
+<InterchangedObject>
+    <application>
+        <rootclass>
+            <external-reference>
+                <group-identifier>2F 73 74 61 72 74 75 70</group-identifier>
+                <object-number>0</object-number>
+            </external-reference>
+        </rootclass>
+        <items>
+                <resident-program>
+                    <rootclass>
+                        <internal-reference>1</internal-reference>
+                    </rootclass>
+                    <initially-active><false/></initially-active>
+                    <name>50 4D 42</name>
+                </resident-program>
+            
+                <boolean-variable>
+                    <rootclass>
+                        <internal-reference>2</internal-reference>
+                    </rootclass>
+                    <original-value>
+                        <boolean><false/></boolean>
+                    </original-value>
+                </boolean-variable>
+            
+                <link>
+                    <rootclass>
+                        <internal-reference>3</internal-reference>
+                    </rootclass>
+                    <initially-active><false/></initially-active>
+                    <link-condition>
+                        <event-source>
+                            <internal-reference>0</internal-reference>
+                        </event-source>
+                        <event-type><is-running/></event-type>
+                    </link-condition>
+                    <link-effect>
+                            <call>
+                                <target>
+                                    <direct-reference>
+                                        <internal-reference>1</internal-reference>
+                                    </direct-reference>
+                                </target>
+                                <call-succeeded>
+                                    <internal-reference>2</internal-reference>
+                                </call-succeeded>
+                                <parameters>
+                                        <new-generic-octetstring>
+                                            <indirect-reference>
+                                                <internal-reference>201</internal-reference>
+                                            </indirect-reference>
+                                        </new-generic-octetstring>
+                                    
+                                        <new-generic-integer>
+                                            <integer>49</integer>
+                                        </new-generic-integer>
+                                    
+                                        <new-generic-octetstring>
+                                            <octetstring>6D 79 66 61 76</octetstring>
+                                        </new-generic-octetstring>
+                                    
+                                        <new-generic-octetstring>
+                                            <octetstring>
+                                                6D 79 20 66 61 76 6F 75 72 69 74 65 20 70 72 6F 
+                                                67 72 61 6D
+                                            </octetstring>
+                                        </new-generic-octetstring>
+                                    
+                                        <new-generic-integer>
+                                            <indirect-reference>
+                                                <internal-reference>202</internal-reference>
+                                            </indirect-reference>
+                                        </new-generic-integer>
+                                    
+                                </parameters>
+                            </call>
+                        
+                            <test-variable>
+                                <target>
+                                    <direct-reference>
+                                        <internal-reference>2</internal-reference>
+                                    </direct-reference>
+                                </target>
+                                <operator>
+                                    <integer>1</integer>
+                                </operator>
+                                <comparison-value>
+                                    <new-generic-boolean>
+                                        <boolean><true/></boolean>
+                                    </new-generic-boolean>
+                                </comparison-value>
+                            </test-variable>
+                        
+                            <test-variable>
+                                <target>
+                                    <direct-reference>
+                                        <internal-reference>202</internal-reference>
+                                    </direct-reference>
+                                </target>
+                                <operator>
+                                    <integer>1</integer>
+                                </operator>
+                                <comparison-value>
+                                    <new-generic-integer>
+                                        <integer>0</integer>
+                                    </new-generic-integer>
+                                </comparison-value>
+                            </test-variable>
+                        
+                    </link-effect>
+                </link>
+            
+        </items>
+    </application>
+</InterchangedObject>
