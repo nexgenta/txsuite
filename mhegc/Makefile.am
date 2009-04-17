@@ -2,6 +2,8 @@
 ## From redbutton-author-20080125
 ## http://redbutton.sourceforge.net/
 
+SUBDIRS = helloworld
+
 AM_YFLAGS = -d
 AM_LFLAGS = -i
 
@@ -25,3 +27,7 @@ mhegc_SOURCES = parselex.l parser.c asn1tag.h der_encode.h utils.h \
 
 parser.h parselex.l tokens.h: ccc grammar asn1tag.h
 	./ccc -l parselex.l -p parser.c -h parser.h -t tokens.h < grammar
+
+rbdocdir = ${docdir}/redbutton
+
+rbdoc_DATA = COPYING HOWTO-helloworld TODO
