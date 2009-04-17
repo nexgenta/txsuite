@@ -1,0 +1,17 @@
+= Transmission Suite
+
+This is a collection of tools and utilities pulled from various places
+for use when preparing multimedia content for broadcast.
+
+The suite aims to cover, primarily:
+
+* MPEG-2 Transport Stream creation and introspection
+* Tools for testing and simulating DVB broadcasts
+* MPEG-4 container manipulation (MPEG-4 Part 14; ISO/IEC 14496-14:2003)
+* SDP, RTSP and RTP testing tools
+* MHEG-5 authoring and testing (specifically the UK DVB profile to begin with)
+
+Most (if not all) of the tools are licensed under the GNU General
+Public License, version 2.
+
+
