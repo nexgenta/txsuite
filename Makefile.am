@@ -1,6 +1,14 @@
 ## Transmission Suite
 
-DIST_SUBDIRS = buildtools
+DIST_SUBDIRS = buildtools mhegc dss
 
-SUBDIRS = mhegc
+if BUILD_MHEGC
+MHEGC_SUBDIRS = mhegc
+endif
+
+if BUILD_DSS
+DSS_SUBDIRS = dss
+endif
+
+SUBDIRS = ${MHEGC_SUBDIRS} ${DSS_SUBDIRS}
 

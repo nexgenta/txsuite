@@ -1,7 +1,8 @@
 # Transmission Suite
 
 This is a collection of tools and utilities pulled from various places
-for use when preparing multimedia content for broadcast.
+for use when preparing multimedia content for broadcast and streaming it
+over IP networks.
 
 The suite aims to cover, primarily:
 
@@ -11,11 +12,60 @@ The suite aims to cover, primarily:
 * SDP, RTSP and RTP testing tools
 * MHEG-5 authoring and testing (specifically the UK DVB profile to begin with)
 
-Most (if not all) of the tools are licensed under the GNU General
-Public License, version 2.
+If the BBC's [Project Canvas](http://www.bbc.co.uk/bbctrust/consult/open_consultations/canvas.html)
+achieves trust approval, it will be a further aim of this project that the tools provided
+will interoperate well with a Project Canvas workflow. Once the Project Canvas
+specifications have been completed and released, work will commence on ensuring
+that these tools are suitably aligned with them.
+
+## Licensing
+
+Most of the tools are licensed under the GNU General Public License, version 2.
+Darwin Streaming Server is licensed under the APSL, version 2.
 
 Sources are taken from:
 
 * [dvbloop](http://cpn.dyndns.org/projects/dvbloop.shtml)
 * [mhegenc](http://www.spongelava.com/mhegenc.html)
 * [RedButton](http://redbutton.sourceforge.net)
+* [OpenCaster](http://www.avalpa.com/)
+* [Darwin Streaming Server](http://dss.macosforge.org/)
+
+## Projects
+
+### dvbloop
+
+dvbloop provides a loopback (virtual) DVB adapter device on Linux-based systems. DVB
+receiver applications (such as those provided by the [LinuxTV](http://www.linuxtv.org/)
+project) can open this device as though it were a real DVB adapter; data written to the
+device is then looped back to those applications, allowing simulation in software of
+DVB transport streams (useful when testing on hosts which do not have DVB hardware, or
+on virtual machines).
+
+### mhegenc
+
+mhegenc is an MHEG-5 script encoder and decoder originally created by Samsung, and now
+maintained by [SpongeLava](http://www.spongelava.com/). It accepts files containing
+MHEG-5 textual notation and produces ASN.1 DER output ready for transmission. In decoding
+mode, the reverse operation is performed.
+
+### RedButton (mhegc/mhegd, rb-download, rb-browser)
+
+The RedButton suite contains tools for compiling and decompiling, capturing and viewing
+MHEG-5 interactive applications. The tools can be used with DVB hardware, with the dvbloop
+device, or with files loaded from disk. rb-browser requires X11, libpng, FFmpeg and the
+ALSA audio system.
+
+### OpenCaster
+
+OpenCaster is a set of tools for manipulating and broadcasting MPEG-2 Transport Streams,
+as well as utilities for converting MPEG Elementary Streams to MPEG Packetized Elementary
+Streams, and vice versa. It includes tools to generate dummy streams, remap PIDs, and
+dump information about streams.
+
+### Darwin Streaming Server
+
+Darwin Streaming Server is the open source version of Apple's [QuickTime Streaming Server](http://www.apple.com/quicktime/streamingserver/) (QTSS),
+a high-performance RTSP/RTP media server supporting both unicast and multicast broadcasts
+from sources in various formats.
+

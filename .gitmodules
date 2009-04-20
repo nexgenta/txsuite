@@ -1,3 +1,6 @@
 [submodule "buildtools"]
 	path = buildtools
 	url = git://github.com/nevali/buildtools.git
+[submodule "dss"]
+	path = dss
+	url = git://github.com/nevali/dss.git
