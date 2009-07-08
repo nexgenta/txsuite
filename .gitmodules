@@ -4,3 +4,9 @@
 [submodule "dss"]
 	path = dss
 	url = git://github.com/nevali/dss.git
+[submodule "tsdemux"]
+	path = tsdemux
+	url = git://github.com/nevali/tsdemux.git
+[submodule "tstools"]
+	path = tstools
+	url = git://github.com/nevali/tstools.git
