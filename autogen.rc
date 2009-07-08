@@ -1,1 +1,1 @@
-SUBDIRS=dss
+SUBDIRS='dss tsdemux'
