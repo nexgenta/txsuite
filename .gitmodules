@@ -10,3 +10,6 @@
 [submodule "tstools"]
 	path = tstools
 	url = git://github.com/nevali/tstools.git
+[submodule "shroedinger"]
+	path = shroedinger
+	url = git://diracvideo.org/git/schroedinger.git
