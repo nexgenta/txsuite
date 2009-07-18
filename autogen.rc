@@ -1,1 +1,1 @@
-SUBDIRS='dss tsdemux'
+SUBDIRS='dss tsdemux png2rgb'

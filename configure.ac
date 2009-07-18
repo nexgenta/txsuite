@@ -21,6 +21,11 @@ if test -d $srcdir/tsdemux && test -f $srcdir/tssdemux/configure ; then
 	build_tsdemux="enabled"
 fi
 
+if test -d $srcdir/png2rgb && test -f $srcdir/png2rgb/configure ; then
+	AC_CONFIG_SUBDIRS([png2rgb])
+	build_png2rgb="enabled"
+fi
+
 build_mhegc="enabled"
 
 AC_CONFIG_FILES([
@@ -33,6 +38,7 @@ mhegc/helloworld/Makefile
 AM_CONDITIONAL([BUILD_MHEGC],[test x"$build_mhegc" = x"enabled"])
 AM_CONDITIONAL([BUILD_DSS],[test x"$build_dss" = x"enabled"])
 AM_CONDITIONAL([BUILD_TSDEMUX],[test x"$build_tsdemux" = x"enabled"])
+AM_CONDITIONAL([BUILD_PNG2RGB],[test x"$build_png2rgb" = x"enabled"])
 
 AC_OUTPUT
 
@@ -43,4 +49,5 @@ Configuration summary:
 Darwin Streaming Server:     $build_dss
 RedButton mhegc/mhegd:       $build_mhegc
 tsdemux:                     $build_tsdemux
+png2rgb:                     $build_png2rgb
 ])
