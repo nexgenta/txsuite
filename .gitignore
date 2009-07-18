@@ -19,3 +19,4 @@ INSTALL
 aclocal.m4
 .deps
 .libs
+ltmain.sh
