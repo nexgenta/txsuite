@@ -11,6 +11,9 @@ The suite aims to cover, primarily:
 * MPEG-4 container manipulation (MPEG-4 Part 14; ISO/IEC 14496-14:2003)
 * SDP, RTSP and RTP testing tools
 * MHEG-5 authoring and testing (specifically the UK DVB profile to begin with)
+* Dirac video encoding, decoding and packetisation
+* Ogg Vorbis audio encoding, decoding and packetisation
+* Utilities to manipulate individual pre-rendered frames of video
 
 If the BBC's [Project Canvas](http://www.bbc.co.uk/bbctrust/consult/open_consultations/canvas.html)
 achieves trust approval, it will be a further aim of this project that the tools provided
@@ -23,6 +26,10 @@ that these tools are suitably aligned with them.
 Most of the tools are licensed under the GNU General Public License, version 2.
 Darwin Streaming Server is licensed under the APSL, version 2.
 
+It should be noted that there are few, if any, interdependencies between
+the tools included; each of the top-level 'sub-project' directories within
+the build tree is typically a separate project in its own right.
+
 Sources are taken from:
 
 * [dvbloop](http://cpn.dyndns.org/projects/dvbloop.shtml)
@@ -30,6 +37,27 @@ Sources are taken from:
 * [RedButton](http://redbutton.sourceforge.net)
 * [OpenCaster](http://www.avalpa.com/)
 * [Darwin Streaming Server](http://dss.macosforge.org/)
+* [MPEG4IP](http://mpeg4ip.sourceforge.net/)
+* [Shroedinger](http://diracvideo.org/)
+* [tstools](http://tstools.berlios.de/)
+
+## Pre-requisites
+
+You should install at least the following before building txsuite. If you're
+building from source, you may find it helpful to build and install everything
+into a common prefix (e.g., /opt/txsuite):
+
+* [libpng](http://www.libpng.org/)
+* [libogg](http://xiph.org/)
+* [libvorbis](http://xiph.org/)
+* [libflac](http://xiph.org/)
+* [vorbis-tools](http://xiph.org/)
+* [libSDL](http://www.libsdl.org/)
+* [liboil](http://liboil.freedesktop.org/wiki/)
+
+If you don't have [pkg-config](http://pkg-config.freedesktop.org/wiki/) installed
+on your system, you will also need to install it. Almost every Linux distribution
+includes it out of the box, but other platforms do not.
 
 ## Projects
 
