@@ -13,3 +13,6 @@
 [submodule "shroedinger"]
 	path = shroedinger
 	url = git://diracvideo.org/git/schroedinger.git
+[submodule "mpeg4ip"]
+	path = mpeg4ip
+	url = git://github.com/nevali/mpeg4ip.git
