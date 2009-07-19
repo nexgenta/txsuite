@@ -10,9 +10,12 @@
 [submodule "tstools"]
 	path = tstools
 	url = git://github.com/nevali/tstools.git
-[submodule "shroedinger"]
-	path = shroedinger
-	url = git://diracvideo.org/git/schroedinger.git
 [submodule "mpeg4ip"]
 	path = mpeg4ip
 	url = git://github.com/nevali/mpeg4ip.git
+[submodule "schroedinger-tools"]
+	path = schroedinger-tools
+	url = git://diracvideo.org/git/schroedinger-tools.git
+[submodule "schroedinger"]
+	path = schroedinger
+	url = git://diracvideo.org/git/schroedinger.git
