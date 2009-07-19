@@ -11,22 +11,45 @@ AC_PROG_YACC
 examplesdir='${datarootdir}/examples/${PACKAGE_TARNAME}'
 AC_SUBST([examplesdir])
 
-if test -d $srcdir/dss && test -f $srcdir/dss/configure ; then
-	AC_CONFIG_SUBDIRS([dss])
-	build_dss="enabled"
+dnl TX_SUBPROJ(subdir, var, opt, help)
+AC_DEFUN([TX_SUBPROJ],[
+$2=no
+if test -d $srcdir/$1 && test -f $srcdir/$1/configure ; then
+	AC_ARG_ENABLE([$3],[$4],[$2=$enableval],[$2=yes])
 fi
-
-if test -d $srcdir/tsdemux && test -f $srcdir/tssdemux/configure ; then
-	AC_CONFIG_SUBDIRS([tsdemux])
-	build_tsdemux="enabled"
+if test x"$[$2]" = x"yes" ; then
+	AC_CONFIG_SUBDIRS([$1])
 fi
+])
 
-if test -d $srcdir/png2rgb && test -f $srcdir/png2rgb/configure ; then
-	AC_CONFIG_SUBDIRS([png2rgb])
-	build_png2rgb="enabled"
+dnl TX_SUBDIR(subdir, var, opt, help)
+AC_DEFUN([TX_SUBDIR],[
+$2=no
+if test -d $srcdir/$1 ; then
+	AC_ARG_ENABLE([$3],[$4],[$2=$enableval],[$2=yes])
 fi
+])
 
-build_mhegc="enabled"
+TX_SUBPROJ(dss, build_dss, dss, AS_HELP_STRING([--disable-dss],[don't build Darwin Streaming Server]))
+AM_CONDITIONAL(BUILD_DSS,[test x"$build_dss" = x"yes"])
+
+TX_SUBPROJ(tsdemux, build_tsdemux, tsdemux, AS_HELP_STRING([--disable-tsdemux],[don't build the tsdemux utility]))
+AM_CONDITIONAL(BUILD_TSDEMUX,[test x"$build_tsdemux" = x"yes"])
+
+TX_SUBPROJ(png2rgb, build_png2rgb, png2rgb, AS_HELP_STRING([--disable-png2rgb],[don't build the png2rgb utility]))
+AM_CONDITIONAL(BUILD_PNG2RGB,[test x"$build_png2rgb" = x"yes"])
+
+TX_SUBPROJ(tstools, build_tstools, tstools, AS_HELP_STRING([--disable-tstools],[don't build the Transport Stream Tools]))
+AM_CONDITIONAL(BUILD_TSTOOLS,[test x"$build_tstools" = x"yes"])
+
+TX_SUBPROJ(mpeg4ip, build_mpeg4ip, mpeg4ip, AS_HELP_STRING([--disable-mpeg4ip],[don't build the MPEG4IP suite]))
+AM_CONDITIONAL(BUILD_MPEG4IP,[test x"$build_mpeg4ip" = x"yes"])
+
+TX_SUBDIR(mhegc, build_mhegc, redbutton, AS_HELP_STRING([--disable-redbutton],[don't build the RedButton MHEG compiler/decompiler]))
+AM_CONDITIONAL(BUILD_MHEGC,[test x"$build_mhegc" = x"yes"])
+
+TX_SUBPROJ(shroedinger, build_shroedinger, shroedinger, AS_HELP_STRING([--disable-shroedinger],[don't build the Shroedinger Dirac encoder]))
+AM_CONDITIONAL(BUILD_SHROEDINGER,[test x"$build_shroedinger" = x"yes"])
 
 AC_CONFIG_FILES([
 Makefile
@@ -34,11 +57,6 @@ buildtools/Makefile
 mhegc/Makefile
 mhegc/helloworld/Makefile
 ])
-
-AM_CONDITIONAL([BUILD_MHEGC],[test x"$build_mhegc" = x"enabled"])
-AM_CONDITIONAL([BUILD_DSS],[test x"$build_dss" = x"enabled"])
-AM_CONDITIONAL([BUILD_TSDEMUX],[test x"$build_tsdemux" = x"enabled"])
-AM_CONDITIONAL([BUILD_PNG2RGB],[test x"$build_png2rgb" = x"enabled"])
 
 AC_OUTPUT
 
@@ -50,4 +68,6 @@ Darwin Streaming Server:     $build_dss
 RedButton mhegc/mhegd:       $build_mhegc
 tsdemux:                     $build_tsdemux
 png2rgb:                     $build_png2rgb
+Transport Stream Tools:      $build_tstools
+MPEG4IP:                     $build_mpeg4ip
 ])
