@@ -54,6 +54,7 @@ into a common prefix (e.g., /opt/txsuite):
 * [vorbis-tools](http://xiph.org/)
 * [libSDL](http://www.libsdl.org/)
 * [liboil](http://liboil.freedesktop.org/wiki/)
+* [Boost](http://www.boost.org/)
 
 If you don't have [pkg-config](http://pkg-config.freedesktop.org/wiki/) installed
 on your system, you will also need to install it. Almost every Linux distribution
@@ -97,3 +98,20 @@ Darwin Streaming Server is the open source version of Apple's [QuickTime Streami
 a high-performance RTSP/RTP media server supporting both unicast and multicast broadcasts
 from sources in various formats.
 
+### MPEG4IP
+
+MPEG4IP is a reference implementation of the MPEG 4 standard, along with a
+number of other useful utilities. Tools are included to encode, stream and
+play back media, as well as manipulate MPEG 4 containers.
+
+### Schroedinger
+
+Schroedinger is a fast reference implementation of the BBC’s [Dirac](http://diracvideo.org/)
+video codec.
+
+### png2rgb
+
+png2rgb is a small utility to process a sequence of one or more PNG images into
+a single raw 24-bit RGB file. The resulting .rgb file can be passed to the rgb2yuv
+utility included with MPEG4IP in order to generate a raw YUV 4:2:0-format frame
+sequence suitable for feeding into an encoder.
