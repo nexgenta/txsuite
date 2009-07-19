@@ -1,1 +1,1 @@
-SUBDIRS='dss tsdemux png2rgb tstools mpeg4ip shroedinger'
+SUBDIRS='dss tsdemux png2rgb tstools mpeg4ip schroedinger'

@@ -1,6 +1,6 @@
 ## Transmission Suite
 
-DIST_SUBDIRS = buildtools mhegc dss tsdemux png2rgb mpeg4ip shroedinger
+DIST_SUBDIRS = buildtools mhegc dss tsdemux png2rgb mpeg4ip schroedinger
 
 if BUILD_MHEGC
 MHEGC_SUBDIRS = mhegc
@@ -26,8 +26,8 @@ if BUILD_MPEG4IP
 MPEG4IP_SUBDIRS = mpeg4ip
 endif
 
-if BUILD_SHROEDINGER
-SHROEDINGER_SUBDIRS = shroedinger
+if BUILD_SCHROEDINGER
+SCHROEDINGER_SUBDIRS = schroedinger
 endif
 
 SUBDIRS = \
@@ -37,6 +37,6 @@ SUBDIRS = \
 	${PNG2RGB_SUBDIRS} \
 	${TSTOOLS_SUBDIRS} \
 	${MPEG4IP_SUBDIRS} \
-	${SHROEDINGER_SUBDIRS}
+	${SCHROEDINGER_SUBDIRS}
 
 

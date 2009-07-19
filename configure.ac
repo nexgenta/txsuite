@@ -48,8 +48,8 @@ AM_CONDITIONAL(BUILD_MPEG4IP,[test x"$build_mpeg4ip" = x"yes"])
 TX_SUBDIR(mhegc, build_mhegc, redbutton, AS_HELP_STRING([--disable-redbutton],[don't build the RedButton MHEG compiler/decompiler]))
 AM_CONDITIONAL(BUILD_MHEGC,[test x"$build_mhegc" = x"yes"])
 
-TX_SUBPROJ(shroedinger, build_shroedinger, shroedinger, AS_HELP_STRING([--disable-shroedinger],[don't build the Shroedinger Dirac encoder]))
-AM_CONDITIONAL(BUILD_SHROEDINGER,[test x"$build_shroedinger" = x"yes"])
+TX_SUBPROJ(schroedinger, build_schroedinger, schroedinger, AS_HELP_STRING([--disable-schroedinger],[don't build the Schroedinger Dirac encoder libraries]))
+AM_CONDITIONAL(BUILD_SCHROEDINGER,[test x"$build_schroedinger" = x"yes"])
 
 AC_CONFIG_FILES([
 Makefile
@@ -70,4 +70,5 @@ tsdemux:                     $build_tsdemux
 png2rgb:                     $build_png2rgb
 Transport Stream Tools:      $build_tstools
 MPEG4IP:                     $build_mpeg4ip
+Schroedinger:                $build_schroedinger
 ])
