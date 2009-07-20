@@ -1,4 +1,4 @@
 png2rgb
 stamp-h1
 config.h
-config.h.in
+config.h.in*
