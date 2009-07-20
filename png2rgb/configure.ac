@@ -4,6 +4,8 @@ AM_MAINTAINER_MODE
 
 AC_PROG_CC
 
+AC_SYS_LARGEFILE
+
 AC_ARG_WITH([libpng],[AS_HELP_STRING([--with-libpng=DIR],[specify libpng installation prefix])],[libpng_config="$withval/bin/libpng-config"],[libpng_config="libpng-config"])
 
 AC_MSG_CHECKING([for libpng])
