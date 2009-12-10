@@ -19,3 +19,6 @@
 [submodule "schroedinger"]
 	path = schroedinger
 	url = git://diracvideo.org/git/schroedinger.git
+[submodule "ffmpeg"]
+	path = ffmpeg
+	url = git://git.ffmpeg.org/ffmpeg/
