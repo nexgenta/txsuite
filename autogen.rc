@@ -1,1 +1,3 @@
-SUBDIRS='dss tsdemux png2rgb tstools mpeg4ip schroedinger'
+SUBDIRS='dss tsdemux libpng png2rgb tstools mpeg4ip liboil schroedinger'
+PATCHES='liboil:liboil-configure.ac'
+
