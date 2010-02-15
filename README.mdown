@@ -64,6 +64,15 @@ If you don't have [pkg-config](http://pkg-config.freedesktop.org/wiki/) installe
 on your system, you will also need to install it. Almost every Linux distribution
 includes it out of the box, but other platforms do not.
 
+libSDL can be built in-tree if required. Download the latest version of the
+libSDL sources (1.2.14 at the time of writing) and extract the tarball. Rename
+the versioned directory (e.g., <code>SDL-1.2.14</code>) to simply <code>SDL</code>.
+Building SDL in-tree requires a minor patch to the build logic, so you will
+need to run <code>buildtools/autogen</code> after putting it in place. Note
+that running <code>autogen</code> re-creates the configure scripts and Makefiles
+and so requires that you have automake, autoconf and libtool installed properly. For
+most people, just installing an SDL developer package is easier.
+
 ## Projects
 
 ### dvbloop

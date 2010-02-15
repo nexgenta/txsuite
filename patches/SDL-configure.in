@@ -1,0 +1,11 @@
+--- a/configure.in	2010-02-15 20:57:38.000000000 +0000
++++ b/configure.in	2010-02-15 21:01:36.000000000 +0000
+@@ -2909,7 +2909,7 @@
+ AC_SUBST(WINDRES)
+ 
+ AC_OUTPUT([
+-    Makefile sdl-config SDL.spec SDL.qpg sdl.pc
++    Makefile sdl-config SDL.spec SDL.qpg sdl.pc sdl-uninstalled.pc
+ ], [
+     : >build-deps
+     if test x"$MAKE" = x; then MAKE=make; fi; $MAKE depend

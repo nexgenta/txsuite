@@ -1,0 +1,19 @@
+--- a/configure	2010-02-15 21:01:24.000000000 +0000
++++ b/configure	2010-02-15 21:06:22.000000000 +0000
+@@ -30729,7 +30729,7 @@
+ 
+ 
+ 
+-ac_config_files="$ac_config_files Makefile sdl-config SDL.spec SDL.qpg sdl.pc"
++ac_config_files="$ac_config_files Makefile sdl-config SDL.spec SDL.qpg sdl.pc sdl-uninstalled.pc"
+ 
+ ac_config_commands="$ac_config_commands default"
+ 
+@@ -31695,6 +31695,7 @@
+     "SDL.spec") CONFIG_FILES="$CONFIG_FILES SDL.spec" ;;
+     "SDL.qpg") CONFIG_FILES="$CONFIG_FILES SDL.qpg" ;;
+     "sdl.pc") CONFIG_FILES="$CONFIG_FILES sdl.pc" ;;
++    "sdl-uninstalled.pc") CONFIG_FILES="$CONFIG_FILES sdl-uninstalled.pc" ;;
+     "default") CONFIG_COMMANDS="$CONFIG_COMMANDS default" ;;
+ 
+   *) { { $as_echo "$as_me:$LINENO: error: invalid argument: $ac_config_target" >&5
