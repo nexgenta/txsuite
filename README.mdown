@@ -43,17 +43,20 @@ Sources are taken from:
 
 ## Pre-requisites
 
+You will need a copy of pkg-config installed. Most Unix-like operating systems
+ship with a copy or have a package available. If you need to build from source,
+the latest version can be downloaded from http://pkgconfig.freedesktop.org/releases/
+
+
 You should install at least the following before building txsuite. If you're
 building from source, you may find it helpful to build and install everything
 into a common prefix (e.g., /opt/txsuite):
 
-* [libpng](http://www.libpng.org/)
 * [libogg](http://xiph.org/)
 * [libvorbis](http://xiph.org/)
 * [libflac](http://xiph.org/)
 * [vorbis-tools](http://xiph.org/)
 * [libSDL](http://www.libsdl.org/)
-* [liboil](http://liboil.freedesktop.org/wiki/)
 * [Boost](http://www.boost.org/)
 
 If you don't have [pkg-config](http://pkg-config.freedesktop.org/wiki/) installed
