@@ -2,3 +2,6 @@ png2rgb
 stamp-h1
 config.h
 config.h.in*
+libtool
+ltmain.sh
+

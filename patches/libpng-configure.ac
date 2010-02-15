@@ -1,0 +1,9 @@
+--- a/configure.ac	2010-02-15 20:06:25.000000000 +0000
++++ b/configure.ac	2010-02-15 20:26:04.000000000 +0000
+@@ -144,5 +144,6 @@
+ AC_CONFIG_FILES([Makefile libpng.pc:scripts/libpng.pc-configure.in])
+ AC_CONFIG_FILES([libpng-config:scripts/libpng-config.in],
+ 		[chmod +x libpng-config])
++AC_CONFIG_FILES([libpng-uninstalled.pc])
+ 
+ AC_OUTPUT

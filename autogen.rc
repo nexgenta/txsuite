@@ -1,3 +1,7 @@
 SUBDIRS='dss tsdemux libpng png2rgb tstools mpeg4ip liboil schroedinger'
-PATCHES='liboil:liboil-configure.ac'
+PATCHES='liboil:liboil-configure.ac libpng:libpng-configure.ac'
 
+if test -d libpng ; then
+	rm -f libpng/libpng-uninstalled.pc.in
+	cp files/libpng-uninstalled.pc.in libpng/
+fi

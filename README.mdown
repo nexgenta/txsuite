@@ -52,6 +52,7 @@ You should install at least the following before building txsuite. If you're
 building from source, you may find it helpful to build and install everything
 into a common prefix (e.g., /opt/txsuite):
 
+* [zlib](http://www.zlib.net/)
 * [libogg](http://xiph.org/)
 * [libvorbis](http://xiph.org/)
 * [libflac](http://xiph.org/)

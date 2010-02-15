@@ -36,9 +36,9 @@
 #include <stdint.h>
 #include <limits.h>
 #include <sys/types.h>
-#include <setjmp.h>
 #include <errno.h>
 #include <png.h>
+#include <setjmp.h>
 
 typedef struct convertbuf_struct convertbuf_t;
 

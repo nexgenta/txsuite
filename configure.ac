@@ -34,7 +34,7 @@ test x"$build_png2rgb" = x"yes" && need_libpng=yes
 if test x"$need_libpng" = x"yes" ; then
 	AC_MSG_CHECKING([for libpng])
 	AC_ARG_WITH([libpng],[AS_HELP_STRING([--with-libpng=DIR],[specify libpng installation prefix])],[libpng_config="$withval/bin/libpng-config"],[libpng_config="libpng-config"])
-	libpng_prefix=`$libpng_config --prefix`
+	libpng_prefix=`$libpng_config --prefix 2>/dev/null`
 	if test x"$libpng_prefix" = x"" ; then
 		have_libpng=no
 		AC_MSG_RESULT([not found])
@@ -55,6 +55,8 @@ test x"$build_schroedinger" = x"yes" && need_liboil=yes
 
 test x"$build_mpeg4ip" = x"yes" && need_SDL=yes
 
+test x"$build_png2rgb" = x"yes" && need_libpng=yes
+
 TX_WITH_INCLUDED_SUBDIR(libpng, AS_HELP_STRING([--with-included-libpng],[use the bundled version of libpng (default=auto)])])
 TX_WITH_INCLUDED_SUBDIR(liboil, AS_HELP_STRING([--with-included-liboil],[use the bundled version of liboil (default=auto)])])
 TX_WITH_INCLUDED_SUBDIR(x264, AS_HELP_STRING([--with-included-x264],[use the bundled version of x264 (default=auto)])])
@@ -68,7 +70,6 @@ TX_WITH_INCLUDED_SUBDIR(SDL, AS_HELP_STRING([--with-included-SDL],[use the bundl
 TX_WITH_INCLUDED_SUBDIR(libflac, AS_HELP_STRING([--with-included-libflac],[use the bundled version of libflac (default=auto)])])
 
 TX_BUILD_SUBPROJ(libpng)
-
 TX_BUILD_SUBPROJ(png2rgb)
 
 export PKG_CONFIG_PATH

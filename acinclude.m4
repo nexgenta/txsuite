@@ -26,15 +26,16 @@ if test -d $srcdir/$1 ; then
 	AC_ARG_WITH(with_[$1],[$2],[build_$1=$enableval],[build_$1=$def])
 	if test x"$build_$1" = x"auto" ; then
 		if test x"$need_$1" = x"yes" ; then
-			build_$1=no
+			build_$1=yes
 		elif test x"$have_$1" = x"yes" ; then
 			build_$1=no
 		else
-			build_$1=yes
+			build_$1=no
 		fi
-		AC_MSG_RESULT([$build_$1])		
+		AC_MSG_RESULT([$build_$1])
 	fi
 else
+	build_$1=no
 	AC_MSG_RESULT([no (subproject not present)])
 fi
 ])

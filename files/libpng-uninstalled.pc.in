@@ -1,0 +1,11 @@
+prefix=
+exec_prefix=
+libdir=${pcfiledir}
+includedir=${pcfiledir}
+
+Name: libpng-@PNGLIB_VERSION@ uninstalled
+Description: Loads and saves PNG files
+Version: @PNGLIB_VERSION@
+Libs: -L${libdir} -lpng@PNGLIB_MAJOR@@PNGLIB_MINOR@
+Libs.private: @LIBS@
+Cflags: -I${includedir} @LIBPNG_NO_MMX@
