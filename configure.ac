@@ -71,6 +71,8 @@ TX_WITH_INCLUDED_SUBDIR(libflac, AS_HELP_STRING([--with-included-libflac],[use t
 
 TX_BUILD_SUBPROJ(libpng)
 TX_BUILD_SUBPROJ(png2rgb)
+TX_BUILD_SUBPROJ(SDL)
+TX_BUILD_SUBPROJ(mpeg4ip)
 
 export PKG_CONFIG_PATH
 
