@@ -21,3 +21,5 @@ aclocal.m4
 .libs
 ltmain.sh
 compile
+/.*-applied
+
