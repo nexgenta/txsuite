@@ -22,4 +22,5 @@ aclocal.m4
 ltmain.sh
 compile
 /.*-applied
+/SDL
 
