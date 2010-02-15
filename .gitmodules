@@ -31,3 +31,9 @@
 [submodule "libswscale"]
 	path = libswscale
 	url = git://git.ffmpeg.org/libswscale/
+[submodule "liboil"]
+	path = liboil
+	url = git://anongit.freedesktop.org/git/liboil
+[submodule "libpng"]
+	path = libpng
+	url = git://libpng.git.sourceforge.net/gitroot/libpng/libpng
