@@ -36,6 +36,9 @@ if test -d $srcdir/$1 ; then
 	fi
 else
 	build_$1=no
+	if test x"$build_$1" = x"no" && test x"$need_$1" = x"yes" ; then
+		AC_MSG_ERROR($1[ is required by other sub-projects but is not present and cannot be found])
+	fi
 	AC_MSG_RESULT([no (subproject not present)])
 fi
 ])
