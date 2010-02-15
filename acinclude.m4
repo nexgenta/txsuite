@@ -23,7 +23,7 @@ def=]m4_if[($3,,auto,$3)
 build_$1=no
 AC_MSG_CHECKING([whether to build included $1])
 if test -d $srcdir/$1 ; then
-	AC_ARG_WITH(with_[$1],[$2],[build_$1=$enableval],[build_$1=$def])
+	AC_ARG_WITH(included-[$1],[$2],[build_$1=$withval],[build_$1=$def])
 	if test x"$build_$1" = x"auto" ; then
 		if test x"$need_$1" = x"yes" ; then
 			build_$1=yes
@@ -32,8 +32,8 @@ if test -d $srcdir/$1 ; then
 		else
 			build_$1=no
 		fi
-		AC_MSG_RESULT([$build_$1])
 	fi
+    AC_MSG_RESULT([$build_$1])	
 else
 	build_$1=no
 	if test x"$build_$1" = x"no" && test x"$need_$1" = x"yes" ; then

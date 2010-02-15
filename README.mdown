@@ -73,6 +73,10 @@ that running <code>autogen</code> re-creates the configure scripts and Makefiles
 and so requires that you have automake, autoconf and libtool installed properly. For
 most people, just installing an SDL developer package is easier.
 
+When building x264 (built by default if ffmpeg is), you will need to either
+have yasm (yasm-0.6.2 or later) installed, or configure with <code>--disable-asm</code>.
+The latter obviously incurs some significant runtime performance penalties.
+
 ## Projects
 
 ### dvbloop
