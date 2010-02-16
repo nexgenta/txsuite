@@ -1,0 +1,12 @@
+--- a/configure.ac	2010-02-16 11:44:34.000000000 +0000
++++ b/configure.ac	2010-02-16 11:45:02.000000000 +0000
+@@ -49,6 +49,9 @@
+ OIL_VER="0.3.16"
+ PKG_CHECK_MODULES(LIBOIL, liboil-0.3 >= $OIL_VER, HAVE_LIBOIL=yes, HAVE_LIBOIL=no)
+ if test "x${HAVE_LIBOIL}" != xyes ; then
++	PKG_CHECK_MODULES(LIBOIL, liboil >= $OIL_VER, HAVE_LIBOIL=yes, HAVE_LIBOIL=no)
++fi
++if test "x${HAVE_LIBOIL}" != xyes ; then
+   AC_ERROR([liboil-0.3 >= $OIL_VER is required])
+ fi
+ SCHRO_PKG_DEPS="liboil-0.3 >= $OIL_VER"
