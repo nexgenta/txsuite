@@ -68,17 +68,25 @@ dnl - Build a subproject
 dnl
 AC_DEFUN([TX_BUILD_SUBPROJ],[
 if test x"$_TX_SHELL([build_$1])" = x"yes" ; then
-	AC_CONFIG_SUBDIRS([$1])
-	PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$top_builddir/$1"
+	if test x"$NO_RECURSE" = x"" ; then
+		AC_MSG_RESULT([will attempt to build sub-project in $1])
+		AC_CONFIG_SUBDIRS([$1])
+		PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$top_builddir/$1"
+	else
+		AC_MSG_RESULT([skipping configuration of sub-project in $1])	
+		extra_subdirs="$extra_subdirs [$1]"
+	fi
 fi
+AC_SUBST([extra_subdirs])
 ])
 
 dnl TX_BUILD_SUBDIR(subdir)
 dnl - Build a subproject which doesn't use GNU configure
 dnl
 AC_DEFUN([TX_BUILD_SUBDIR],[
-if test x"$build_[$1]" = x"yes" ; then
-	subdirs="$subdirs [$1]"
+if test x"$_TX_SHELL([build_$1])" = x"yes" ; then
+	extra_subdirs="$extra_subdirs [$1]"
 	PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$top_builddir/$1"
 fi
+AC_SUBST([extra_subdirs])
 ])
