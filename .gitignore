@@ -23,4 +23,7 @@ ltmain.sh
 compile
 /.*-applied
 /SDL
-
+/libogg
+/libvorbis
+/libtheora
+/vorbis-tools
