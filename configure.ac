@@ -20,7 +20,7 @@ dnl ###### Top-level subprojects
 TX_ENABLE_SUBDIR(dss,AS_HELP_STRING([--enable-dss],[build Darwin Streaming Server]),no)
 TX_ENABLE_SUBDIR(tsdemux, AS_HELP_STRING([--enable-tsdemux],[don't build the tsdemux utility]),no)
 TX_ENABLE_SUBDIR(png2rgb, AS_HELP_STRING([--disable-png2rgb],[don't build the png2rgb utility]))
-TX_ENABLE_SUBDIR(tstools, AS_HELP_STRING([--disable-tstools],[don't build the Transport Stream Tools]),no)
+TX_ENABLE_SUBDIR(tstools, AS_HELP_STRING([--disable-tstools],[don't build the Transport Stream Tools]))
 TX_ENABLE_SUBDIR(mpeg4ip, AS_HELP_STRING([--disable-mpeg4ip],[don't build the MPEG4IP suite]))
 TX_ENABLE_SUBDIR(mhegc, AS_HELP_STRING([--disable-mhegc],[don't build the RedButton MHEG compiler/decompiler]),no)
 TX_ENABLE_SUBDIR(mhegenc, AS_HELP_STRING([--enable-mhegc],[build the SpongeLava MHEG compiler/decompiler]),no)
@@ -98,6 +98,7 @@ TX_BUILD_SUBPROJ(liboil)
 TX_BUILD_SUBPROJ(schroedinger)
 TX_BUILD_SUBPROJ(boost)
 TX_BUILD_SUBPROJ(schroedinger-tools)
+TX_BUILD_SUBPROJ(tstools)
 
 ## --enable-gpl --enable-version3 --enable-nonfree --disable-ffplay --disable-ffserver --enable-libschroedinger --enable-libtheora --enable-libvorbis --enable-libx264
 dnl TX_BUILD_SUBPROJ(ffmpeg)
