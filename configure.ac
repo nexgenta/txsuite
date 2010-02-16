@@ -99,6 +99,7 @@ TX_BUILD_SUBPROJ(schroedinger)
 TX_BUILD_SUBPROJ(boost)
 TX_BUILD_SUBPROJ(schroedinger-tools)
 TX_BUILD_SUBPROJ(tstools)
+TX_BUILD_SUBPROJ(dss)
 
 ## --enable-gpl --enable-version3 --enable-nonfree --disable-ffplay --disable-ffserver --enable-libschroedinger --enable-libtheora --enable-libvorbis --enable-libx264
 dnl TX_BUILD_SUBPROJ(ffmpeg)
