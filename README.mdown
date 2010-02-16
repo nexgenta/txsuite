@@ -77,6 +77,11 @@ When building x264 (built by default if ffmpeg is), you will need to either
 have yasm (yasm-0.6.2 or later) installed, or configure with <code>--disable-asm</code>.
 The latter obviously incurs some significant runtime performance penalties.
 
+To build mhegc, you will need to install GNU bison, GNU flex and configure with
+<code>--enable-mhegc</code>.
+
+To build Darwin Streaming Server, you will need to configure with <code>--enable-dss</code>.
+
 ## Projects
 
 ### dvbloop
