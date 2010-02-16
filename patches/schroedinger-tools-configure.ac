@@ -1,0 +1,13 @@
+diff --git a/configure.ac b/configure.ac
+index 2f7a6d2..b987676 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -4,6 +4,8 @@ AC_CONFIG_HEADERS(config.h)
+ 
+ AM_INIT_AUTOMAKE(1.6)
+ 
++AC_PROG_LIBTOOL
++
+ AC_PROG_CXX
+ 
+ ACLOCAL_AMFLAGS="-I m4 $ACLOCAL_AMFLAGS"
