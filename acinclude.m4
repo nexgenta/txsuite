@@ -41,16 +41,24 @@ def=]m4_if[($3,,auto,$3)
 build_$1=no
 AC_MSG_CHECKING([whether to build included $1])
 if test -d $srcdir/$1 ; then
-	AC_ARG_WITH(included-[$1],[$2],[build_$1=$withval],[build_$1=$def])
-	if test x"$build_$1" = x"yes" ; then
+	AC_ARG_WITH(included-[$1],[$2],_TX_SHELL([build_$1])[=$withval],_TX_SHELL([build_$1])[=auto])
+	if test x"$_TX_SHELL([build_$1])" = x"yes" ; then
 		true
-	else
-		if test x"$need_$1" = x"yes" ; then
+	elif test x"$_TX_SHELL([build_$1])" = x"auto" ; then
+	   	if test x"$_TX_SHELL([have_$1])" = x"yes" ; then
+			build_$1=no
+		elif test x"$_TX_SHELL([need_$1])" = x"yes" ; then
 			build_$1=yes
-		elif test x"$have_$1" = x"yes" ; then
-			build_$1=no
+		elif test x"$_TX_SHELL([want_$1])" = x"yes" ; then
+			build_$1=yes
 		else
-			build_$1=no
+			build_$1=$def
+		fi
+	elif test x"$_TX_SHELL([build_$1])" = x"no" ; then
+		if test x"$_TX_SHELL([have_$1])" = x"yes" ; then
+			true
+		elif test x"$_TX_SHELL([need_$1])" = x"yes" ; then
+			AC_MSG_ERROR([$1 is required, but is not installed has been explicitly disabled])
 		fi
 	fi
     AC_MSG_RESULT([$build_$1])	

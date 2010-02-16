@@ -22,7 +22,7 @@ TX_ENABLE_SUBDIR(tsdemux, AS_HELP_STRING([--enable-tsdemux],[don't build the tsd
 TX_ENABLE_SUBDIR(png2rgb, AS_HELP_STRING([--disable-png2rgb],[don't build the png2rgb utility]))
 TX_ENABLE_SUBDIR(tstools, AS_HELP_STRING([--disable-tstools],[don't build the Transport Stream Tools]))
 TX_ENABLE_SUBDIR(mpeg4ip, AS_HELP_STRING([--disable-mpeg4ip],[don't build the MPEG4IP suite]))
-TX_ENABLE_SUBDIR(mhegc, AS_HELP_STRING([--enable-mhegc],[build the RedButton MHEG compiler/decompiler]),no)
+TX_ENABLE_SUBDIR(mhegc, AS_HELP_STRING([--disable-mhegc],[build the RedButton MHEG compiler/decompiler]),yes)
 TX_ENABLE_SUBDIR(mhegenc, AS_HELP_STRING([--enable-mhegenc],[build the SpongeLava MHEG compiler/decompiler]),no)
 TX_ENABLE_SUBDIR(schroedinger-tools, AS_HELP_STRING([--disable-vorbis-tools],[don't build the Ogg Vorbis command-line tools]))
 TX_ENABLE_SUBDIR(vorbis-tools, AS_HELP_STRING([--disable-vorbis-tools],[don't build the Ogg Vorbis command-line tools]))
@@ -72,8 +72,8 @@ test x"$build_ffmpeg" = x"yes" && need_libtheora=yes
 TX_WITH_INCLUDED_SUBDIR(libtheora, AS_HELP_STRING([--with-included-libtheora],[use the bundled version of libtheora (default=auto)])])
 
 test x"$build_libvorbis" = x"yes" && need_libogg=yes
-test x"$build_libtheora" = x"yes" && need_libtheora=yes
-test x"$build_vorbistools" = x"yes" && need_libogg=yes
+test x"$build_libtheora" = x"yes" && need_libogg=yes
+test x"$build_vorbis_tools" = x"yes" && need_libogg=yes
 TX_WITH_INCLUDED_SUBDIR(libogg, AS_HELP_STRING([--with-included-libogg],[use the bundled version of libogg (default=auto)])])
 
 test x"$build_schroedinger_tools" = x"yes" && need_boost=yes
@@ -82,8 +82,13 @@ if test x"$need_boost" = x"yes" ; then
 fi
 TX_WITH_INCLUDED_SUBDIR(boost, AS_HELP_STRING([--with-included-boost],[use the bundled version of boost (default=auto)])])
 
-TX_WITH_INCLUDED_SUBDIR(snacc, AS_HELP_STRING([--with-included-snacc],[use the bundled version of snacc (default=auto)])])
+test x"$build_vorbis_tools" = x"yes" && want_libflac="yes"
 TX_WITH_INCLUDED_SUBDIR(libflac, AS_HELP_STRING([--with-included-libflac],[use the bundled version of libflac (default=auto)])])
+
+test x"$build_vorbis_tools" = x"yes" && want_speex="yes"
+
+test x"$build_mhegenc" = x"yes" && need_snacc="yes"
+TX_WITH_INCLUDED_SUBDIR(snacc, AS_HELP_STRING([--with-included-snacc],[use the bundled version of snacc (default=auto)])])
 
 TX_BUILD_SUBPROJ(libpng)
 TX_BUILD_SUBPROJ(png2rgb)
@@ -93,6 +98,8 @@ TX_BUILD_SUBPROJ(x264)
 TX_BUILD_SUBPROJ(libogg)
 TX_BUILD_SUBPROJ(libvorbis)
 TX_BUILD_SUBPROJ(libtheora)
+TX_BUILD_SUBPROJ(libflac)
+TX_BUILD_SUBPROJ(speex)
 TX_BUILD_SUBPROJ(vorbis-tools)
 TX_BUILD_SUBPROJ(liboil)
 TX_BUILD_SUBPROJ(schroedinger)
@@ -100,6 +107,7 @@ TX_BUILD_SUBPROJ(boost)
 TX_BUILD_SUBPROJ(schroedinger-tools)
 TX_BUILD_SUBPROJ(tstools)
 TX_BUILD_SUBPROJ(dss)
+TX_BUILD_SUBDIR(mhegc)
 
 ## --enable-gpl --enable-version3 --enable-nonfree --disable-ffplay --disable-ffserver --enable-libschroedinger --enable-libtheora --enable-libvorbis --enable-libx264
 dnl TX_BUILD_SUBPROJ(ffmpeg)
