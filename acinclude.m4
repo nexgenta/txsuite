@@ -1,18 +1,36 @@
 dnl Transmission suite
 
+m4_define([_TX_SHELL],[m4_translit([$1],[-.],[__])])
+
 dnl TX_ENABLE_SUBDIR(subdir, help, default=yes)
 dnl - Optionally enable building a subproject
 dnl
 AC_DEFUN([TX_ENABLE_SUBDIR],[
 def=]m4_if[($3,,yes,$3)
-build_$1=no
+_TX_SHELL(build_$1)=no
 AC_MSG_CHECKING([whether to build $1])
 if test -d $srcdir/$1 ; then
-	AC_ARG_ENABLE([$1],[$2],[build_$1=$enableval],[build_$1=$def])
-	AC_MSG_RESULT([$build_$1])
+	AC_ARG_ENABLE([$1],[$2],
+		_TX_SHELL([build_$1])=$enableval,
+		_TX_SHELL([build_$1])=$def)
+	AC_MSG_RESULT($_TX_SHELL([build_$1]))
 else
 	AC_MSG_RESULT([no (subproject not present)])
 fi
+])
+
+dnl TX_CHECK_SUBPROJ_ENABLED(project)
+dnl - Check that $need_$1 and $build_$1 don't disagree
+AC_DEFUN([TX_CHECK_SUBPROJ_ENABLED],[
+	if test x"$_TX_SHELL([need_$1])" = x"yes" ; then
+		if test x"$_TX_SHELL([build_$1])" = x"yes" ; then
+			true
+		elif test x"$_TX_SHELL([have_$1])" = x"yes" ; then
+			true
+		else
+			AC_MSG_ERROR([$1 is required by other sub-projects but is not present and cannot be found on your system])
+		fi
+	fi
 ])
 
 dnl TX_WITH_INCLUDED_SUBDIR(subdir, help, default=auto)
@@ -37,7 +55,7 @@ if test -d $srcdir/$1 ; then
 else
 	build_$1=no
 	if test x"$build_$1" = x"no" && test x"$need_$1" = x"yes" ; then
-		AC_MSG_ERROR($1[ is required by other sub-projects but is not present and cannot be found])
+			AC_MSG_ERROR([$1 is required by other sub-projects but is not present and cannot be found on your system])
 	fi
 	AC_MSG_RESULT([no (subproject not present)])
 fi
