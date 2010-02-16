@@ -67,7 +67,7 @@ dnl TX_BUILD_SUBPROJ(subdir)
 dnl - Build a subproject
 dnl
 AC_DEFUN([TX_BUILD_SUBPROJ],[
-if test x"$build_[$1]" = x"yes" ; then
+if test x"$_TX_SHELL([build_$1])" = x"yes" ; then
 	AC_CONFIG_SUBDIRS([$1])
 	PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$top_builddir/$1"
 fi

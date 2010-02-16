@@ -77,7 +77,6 @@ test x"$build_vorbistools" = x"yes" && need_libogg=yes
 TX_WITH_INCLUDED_SUBDIR(libogg, AS_HELP_STRING([--with-included-libogg],[use the bundled version of libogg (default=auto)])])
 
 test x"$build_schroedinger_tools" = x"yes" && need_boost=yes
-
 if test x"$need_boost" = x"yes" ; then
 	AX_BOOST_DETECT
 fi

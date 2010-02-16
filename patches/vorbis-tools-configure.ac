@@ -1,0 +1,13 @@
+--- a/configure.ac	2010-02-16 13:11:43.000000000 +0000
++++ b/configure.ac	2010-02-16 13:18:41.000000000 +0000
+@@ -134,8 +134,8 @@
+   dnl also set VORBISENC_LIBS since an examples needs it
+   dnl the old .m4 sets this to a value to use on top of VORBIS_LIBS,
+   dnl so we do the same here.
+-  VORBISENC_LIBS="-lvorbisenc"
+-  VORBISFILE_LIBS="-lvorbisfile"
++  PKG_CHECK_MODULES(VORBISENC, vorbisenc >= 1.1.1,,VORBISENC_LIBS="-lvorbisenc")
++  PKG_CHECK_MODULES(VORBISFILE, vorbisfile >= 1.1.1,,VORBISFILE_LIBS="-lvorbisfile")
+   AC_SUBST(VORBISENC_LIBS)
+   AC_SUBST(VORBISFILE_LIBS)
+ fi
