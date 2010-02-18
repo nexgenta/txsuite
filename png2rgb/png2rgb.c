@@ -39,6 +39,7 @@
 #include <errno.h>
 #include <png.h>
 #include <setjmp.h>
+#include <unistd.h>
 
 typedef struct convertbuf_struct convertbuf_t;
 
