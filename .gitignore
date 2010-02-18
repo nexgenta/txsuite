@@ -56,4 +56,6 @@ compile
 /opencaster/tools/tsvbr2cbr/tsvbr2cbr
 /opencaster/tools/vbv/vbv
 /opencaster/tools/zpipe/zpipe
+/flac
+/speex
 
