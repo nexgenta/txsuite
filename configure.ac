@@ -27,6 +27,7 @@ TX_ENABLE_SUBDIR(mhegenc, AS_HELP_STRING([--enable-mhegenc],[build the SpongeLav
 TX_ENABLE_SUBDIR(schroedinger-tools, AS_HELP_STRING([--disable-vorbis-tools],[don't build the Ogg Vorbis command-line tools]))
 TX_ENABLE_SUBDIR(vorbis-tools, AS_HELP_STRING([--disable-vorbis-tools],[don't build the Ogg Vorbis command-line tools]))
 TX_ENABLE_SUBDIR(ffmpeg, AS_HELP_STRING([--disable-ffmpeg],[don't build FFmpeg]))
+TX_ENABLE_SUBDIR(opencaster, AS_HELP_STRING([--disable-opencaster],[don't build OpenCaster]))
 
 dnl ###### Dependencies
 
@@ -51,7 +52,7 @@ TX_WITH_INCLUDED_SUBDIR(libpng, AS_HELP_STRING([--with-included-libpng],[use the
 test x"$build_rbbrowser" = x"yes" && need_ffmpeg=yes
 TX_CHECK_SUBPROJ_ENABLED([ffmpeg])
 
-test x"$build_mpeg4ip" = x"yes" && need_SDL=yes
+test x"$build_mpeg4ip" = x"yes" && need_sdl=yes
 TX_WITH_INCLUDED_SUBDIR(SDL, AS_HELP_STRING([--with-included-SDL],[use the bundled version of SDL (default=auto)])])
 
 test x"$build_ffmpeg" = x"yes" && need_x264=yes
@@ -82,8 +83,8 @@ if test x"$need_boost" = x"yes" ; then
 fi
 TX_WITH_INCLUDED_SUBDIR(boost, AS_HELP_STRING([--with-included-boost],[use the bundled version of boost (default=auto)])])
 
-test x"$build_vorbis_tools" = x"yes" && want_libflac="yes"
-TX_WITH_INCLUDED_SUBDIR(libflac, AS_HELP_STRING([--with-included-libflac],[use the bundled version of libflac (default=auto)])])
+test x"$build_vorbis_tools" = x"yes" && want_flac="yes"
+TX_WITH_INCLUDED_SUBDIR(flac, AS_HELP_STRING([--with-included-flac],[use the bundled version of flac (default=auto)])])
 
 test x"$build_vorbis_tools" = x"yes" && want_speex="yes"
 
@@ -92,13 +93,13 @@ TX_WITH_INCLUDED_SUBDIR(snacc, AS_HELP_STRING([--with-included-snacc],[use the b
 
 TX_BUILD_SUBPROJ(libpng)
 TX_BUILD_SUBPROJ(png2rgb)
-TX_BUILD_SUBPROJ(SDL)
+TX_BUILD_SUBPROJ(sdl)
 TX_BUILD_SUBPROJ(mpeg4ip)
 TX_BUILD_SUBPROJ(x264)
 TX_BUILD_SUBPROJ(libogg)
 TX_BUILD_SUBPROJ(libvorbis)
 TX_BUILD_SUBPROJ(libtheora)
-TX_BUILD_SUBPROJ(libflac)
+TX_BUILD_SUBPROJ(flac)
 TX_BUILD_SUBPROJ(speex)
 TX_BUILD_SUBPROJ(vorbis-tools)
 TX_BUILD_SUBPROJ(liboil)
@@ -108,6 +109,7 @@ TX_BUILD_SUBPROJ(schroedinger-tools)
 TX_BUILD_SUBPROJ(tstools)
 TX_BUILD_SUBPROJ(dss)
 TX_BUILD_SUBDIR(mhegc)
+TX_BUILD_SUBDIR(opencaster)
 
 ## --enable-gpl --enable-version3 --enable-nonfree --disable-ffplay --disable-ffserver --enable-libschroedinger --enable-libtheora --enable-libvorbis --enable-libx264
 dnl TX_BUILD_SUBPROJ(ffmpeg)
@@ -133,16 +135,18 @@ tsdemux:                     $build_tsdemux
 libpng:                      $build_libpng
 png2rgb:                     $build_png2rgb
 Transport Stream Tools:      $build_tstools
-SDL:                         $build_SDL
+SDL:                         $build_sdl
 MPEG4IP:                     $build_mpeg4ip
 liboil:                      $build_liboil
 Schroedinger:                $build_schroedinger
 x264:                        $build_x264
-Boost:                       $build_boost
+Schroedinger Tools:          $build_schroedinger_tools
 Ogg:                         $build_libogg
 Vorbis:                      $build_libvorbis
 Theora:                      $build_libtheora
-FLAC:                        $build_libflac
+FLAC:                        $build_flac
+Speex:                       $build_speex
 Vorbis Tools:                $build_vorbis_tools
 ffmpeg:                      $build_ffmpeg
+OpenCaster:                  $build_opencaster
 ])

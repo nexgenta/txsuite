@@ -77,8 +77,13 @@ When building x264 (built by default if ffmpeg is), you will need to either
 have yasm (yasm-0.6.2 or later) installed, or configure with <code>--disable-asm</code>.
 The latter obviously incurs some significant runtime performance penalties.
 
-To build mhegc, you will need to install GNU bison, GNU flex and configure with
-<code>--enable-mhegc</code>.
+To build mhegc, you will need to install GNU bison and GNU flex.
+
+To build OpenCaster, you will need to install Python 2.4's development package
+(assuming you don't have it already). Note that only Python 2.4 is acceptable;
+Python 2.3 and 2.5 are not acceptable alternatives (most operating systems
+ship with or allow you to install Python 2.4 alongside other versions if
+needed).
 
 To build Darwin Streaming Server, you will need to configure with <code>--enable-dss</code>.
 
