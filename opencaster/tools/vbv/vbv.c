@@ -22,7 +22,6 @@
 #include <stdio.h> 
 #include <stdio_ext.h> 
 #include <unistd.h> 
-#include <netinet/ether.h>
 #include <netinet/in.h>
 #include <stdio.h>
 #include <string.h>
@@ -88,6 +87,8 @@ const double frame_sec[16] = {
 				1.0,
 				1.0,
 };
+
+#define queue vbv_queue__
 
 typedef struct queue {
 	long long int		index;

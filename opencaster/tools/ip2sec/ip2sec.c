@@ -18,7 +18,12 @@
 
 #define _BSD_SOURCE 1
 
+#include <sys/types.h>
+#if defined(linux)
 #include <netinet/ether.h>
+#else
+#include <sys/ethernet.h>
+#endif
 #include <netinet/in.h>
 #include <stdio.h>
 #include <pcap.h>
@@ -31,6 +36,12 @@
 #define SECTION_HEADER_SIZE 3 // Section header
 #define SECTION_MPE_HEADER_SIZE 12 // MPE Section Header, contains section header
 #define SECTION_MAX_SIZE 4096
+
+#if defined(linux)
+# define EA(sym)                       sym
+#else
+# define EA(sym)                       sym.ether_addr_octet
+#endif
 
 static char ethernet_capture_device[] = "eth0"; 
 
@@ -97,12 +108,12 @@ int main(int argc, char *argv[])
 			datagram_section[1] |= 0xb0; /* datagram section lenght, reserved, syntax, no private */
 
 			/* Parse ethernet header into section header */
-			datagram_section[11] = ethernet->ether_dhost[0];
-			datagram_section[10] = ethernet->ether_dhost[1];
-			datagram_section[9] = ethernet->ether_dhost[2];
-			datagram_section[8] = ethernet->ether_dhost[3];
-			datagram_section[4] = ethernet->ether_dhost[4];
-			datagram_section[3] = ethernet->ether_dhost[5];
+			datagram_section[11] = EA(ethernet->ether_dhost)[0];
+			datagram_section[10] = EA(ethernet->ether_dhost)[1];
+			datagram_section[9] = EA(ethernet->ether_dhost)[2];
+			datagram_section[8] = EA(ethernet->ether_dhost)[3];
+			datagram_section[4] = EA(ethernet->ether_dhost)[4];
+			datagram_section[3] = EA(ethernet->ether_dhost)[5];
 
 			/* Build section body */
 			memcpy(datagram_section + SECTION_MPE_HEADER_SIZE, packet + size_ethernet, datagram_section_size - SECTION_MPE_HEADER_SIZE);

@@ -21,7 +21,6 @@
 #include <stdio.h> 
 #include <stdio_ext.h> 
 #include <unistd.h> 
-#include <netinet/ether.h>
 #include <netinet/in.h>
 #include <stdio.h>
 #include <string.h>
@@ -66,6 +65,8 @@ int ts_bitrate = 0;				/* bitrate of the output transport stream */
 int vbv_max = 0;				/* video buffer verifier maximum size */
 int vbv_current_size = 0;			/* video buffer verifier current size */
 int first_frame_ts_size = 0;
+
+#define queue pv2ts_queue__
 
 typedef struct queue {
 	unsigned long long	size;

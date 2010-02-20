@@ -30,6 +30,8 @@
 #define TS_PACKET_SIZE 188
 #define MAX_PID 8192
 
+#define queue tsns_queue_
+
 typedef struct queue {
 	int			fd;
 	char*			name;

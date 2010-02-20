@@ -21,7 +21,6 @@
 #include <stdio.h> 
 #include <stdio_ext.h> 
 #include <unistd.h> 
-#include <netinet/ether.h>
 #include <netinet/in.h>
 #include <stdio.h>
 #include <string.h>

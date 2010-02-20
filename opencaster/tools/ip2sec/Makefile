@@ -12,7 +12,7 @@ all: $(TARGET)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(TARGET): $(OBJS)
-	$(CC) -o $@ $(OBJS) $(LFLAGS)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LFLAGS)
 
 install: all
 	install -m 755 $(TARGET) $(DESTDIR) 
