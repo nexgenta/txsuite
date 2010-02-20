@@ -71,13 +71,21 @@ else
 fi
 ])
 
-dnl TX_BUILD_SUBPROJ(subdir)
+dnl TX_BUILD_SUBPROJ(subdir[, command])
 dnl - Build a subproject
 dnl
 AC_DEFUN([TX_BUILD_SUBPROJ],[
 if test x"$_TX_S([build_$1])" = x"yes" ; then
 	if test x"$NO_RECURSE" = x"" ; then
-		AC_CONFIG_SUBDIRS([$1])
+		m4_if($2,,
+			[AC_CONFIG_SUBDIRS([$1])],
+			[AC_CONFIG_COMMANDS([$1],[
+				top_srcdir=`cd $srcdir && pwd`
+				test -d $1 || mkdir $1 || exit $?
+				cd $1 || exit $?
+				$top_srcdir/$1/$2 || exit $?
+				])]
+			)
 		PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$top_builddir/$1"
 	else
 		AC_MSG_RESULT([skipping configuration of sub-project in $1])	
