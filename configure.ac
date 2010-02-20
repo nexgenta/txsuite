@@ -10,6 +10,14 @@ AC_PROG_CC
 AM_PROG_LEX
 AC_PROG_YACC
 
+if test x"$prefix" = x"NONE" ; then
+	prefix="$ac_default_prefix"
+fi
+
+if test x"$exec_prefix" = x"NONE" ; then
+	exec_prefix='${prefix}'
+fi
+
 top_builddir="`pwd`"
 
 examplesdir='${datarootdir}/examples/${PACKAGE_TARNAME}'
@@ -81,7 +89,9 @@ test x"$build_schroedinger_tools" = x"yes" && need_boost=yes
 if test x"$need_boost" = x"yes" ; then
 	AX_BOOST_DETECT
 fi
-TX_WITH_INCLUDED_SUBDIR(boost, AS_HELP_STRING([--with-included-boost],[use the bundled version of boost (default=auto)])])
+if test x"$have_boost" = x"no" && test x"$need_boost" = x"yes" ; then
+	AC_MSG_ERROR([boost is required to build schroedinger-tools; please specify a path to it with --with-boost=DIR])
+fi
 
 test x"$build_vorbis_tools" = x"yes" && want_flac="yes"
 TX_WITH_INCLUDED_SUBDIR(flac, AS_HELP_STRING([--with-included-flac],[use the bundled version of flac (default=auto)])])
@@ -104,15 +114,12 @@ TX_BUILD_SUBPROJ(speex)
 TX_BUILD_SUBPROJ(vorbis-tools)
 TX_BUILD_SUBPROJ(liboil)
 TX_BUILD_SUBPROJ(schroedinger)
-TX_BUILD_SUBPROJ(boost)
 TX_BUILD_SUBPROJ(schroedinger-tools)
 TX_BUILD_SUBPROJ(tstools)
 TX_BUILD_SUBPROJ(dss)
 TX_BUILD_SUBDIR(mhegc)
 TX_BUILD_SUBDIR(opencaster)
-
-## --enable-gpl --enable-version3 --enable-nonfree --disable-ffplay --disable-ffserver --enable-libschroedinger --enable-libtheora --enable-libvorbis --enable-libx264
-dnl TX_BUILD_SUBPROJ(ffmpeg)
+dnl TX_BUILD_SUBPROJ(ffmpeg,[configure --prefix=$prefix --enable-gpl --enable-version3 --enable-nonfree --disable-ffplay --disable-ffserver --enable-libschroedinger --enable-libtheora --enable-libvorbis --enable-libx264])
 
 export PKG_CONFIG_PATH
 
