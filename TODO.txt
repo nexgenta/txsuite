@@ -1,0 +1,3 @@
+* Ensure flac/speex are built and detected properly
+* Network-related utilities need to support IPv6
+* Support compiling/decompiling MHEG-5 to MHEG-8 (MHEG-XML)
