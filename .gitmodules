@@ -37,3 +37,6 @@
 [submodule "libpng"]
 	path = libpng
 	url = git://libpng.git.sourceforge.net/gitroot/libpng/libpng
+[submodule "opencaster"]
+	path = opencaster
+	url = git://github.com/nexgenta/opencaster.git
