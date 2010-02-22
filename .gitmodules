@@ -24,7 +24,7 @@
 	url = git://git.ffmpeg.org/ffmpeg/
 [submodule "x264"]
 	path = x264
-	url = git://git.videolan.org/x264.git
+	url = git://github.com/nexgenta/x264.git
 [submodule "flvstreamer"]
 	path = flvstreamer
 	url = git://github.com/nevali/flvstreamer.git
