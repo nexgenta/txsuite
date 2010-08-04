@@ -1,6 +1,6 @@
 [submodule "buildtools"]
 	path = buildtools
-	url = git://github.com/nevali/buildtools.git
+	url = git://github.com/nexgenta/buildtools.git
 [submodule "dss"]
 	path = dss
 	url = git://github.com/nevali/dss.git
@@ -9,10 +9,10 @@
 	url = git://github.com/nevali/tsdemux.git
 [submodule "tstools"]
 	path = tstools
-	url = git://github.com/nevali/tstools.git
+	url = git://github.com/nexgenta/tstools.git
 [submodule "mpeg4ip"]
 	path = mpeg4ip
-	url = git://github.com/nevali/mpeg4ip.git
+	url = git://github.com/nexgenta/mpeg4ip.git
 [submodule "schroedinger-tools"]
 	path = schroedinger-tools
 	url = git://diracvideo.org/git/schroedinger-tools.git
