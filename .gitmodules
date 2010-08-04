@@ -40,3 +40,6 @@
 [submodule "mhegenc"]
 	path = mhegenc
 	url = git://github.com/nexgenta/mhegenc.git
+[submodule "png2rgb"]
+	path = png2rgb
+	url = git://github.com/nexgenta/png2rgb.git
