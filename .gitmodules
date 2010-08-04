@@ -34,3 +34,9 @@
 [submodule "opencaster"]
 	path = opencaster
 	url = git://github.com/nexgenta/opencaster.git
+[submodule "snacc"]
+	path = snacc
+	url = git://github.com/nexgenta/snacc.git
+[submodule "mhegenc"]
+	path = mhegenc
+	url = git://github.com/nexgenta/mhegenc.git
