@@ -18,16 +18,13 @@
 	url = git://diracvideo.org/git/schroedinger.git
 [submodule "ffmpeg"]
 	path = ffmpeg
-	url = git://git.github.com/nexgenta/ffmpeg.git
+	url = git://github.com/nexgenta/ffmpeg.git
 [submodule "x264"]
 	path = x264
 	url = git://github.com/nexgenta/x264.git
 [submodule "flvstreamer"]
 	path = flvstreamer
 	url = git://github.com/nevali/flvstreamer.git
-[submodule "libswscale"]
-	path = libswscale
-	url = git://git.ffmpeg.org/libswscale/
 [submodule "liboil"]
 	path = liboil
 	url = git://anongit.freedesktop.org/git/liboil
