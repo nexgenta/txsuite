@@ -1,4 +1,4 @@
-SUBDIRS='dss tsdemux libpng png2rgb tstools mpeg4ip liboil schroedinger schroedinger-tools opencaster x264'
+SUBDIRS='dss tsdemux libpng png2rgb tstools mpeg4ip liboil schroedinger schroedinger-tools opencaster x264 snacc mhegenc'
 PATCHES='libpng:libpng-configure.ac SDL:SDL-configure.in SDL:SDL-configure schroedinger:schroedinger-configure.ac vorbis-tools:vorbis-tools-configure.ac vorbis-tools:vorbis-tools-configure schroedinger-tools:schroedinger-tools-configure.ac'
 
 if test -d libpng ; then
